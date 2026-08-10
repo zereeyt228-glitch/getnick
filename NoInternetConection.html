@@ -1,0 +1,420 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GetNick.ru — Нет подключения к интернету</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --bg-color: #090d16;
+            --card-bg: rgba(18, 26, 43, 0.75);
+            --card-border: rgba(255, 255, 255, 0.08);
+            --accent-primary: #6366f1;
+            --accent-secondary: #ec4899;
+            --accent-cyan: #06b6d4;
+            --accent-amber: #f59e0b;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --radius-lg: 20px;
+            --radius-md: 12px;
+            --glow: 0 0 25px rgba(99, 102, 241, 0.35);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        body::before, body::after {
+            content: '';
+            position: absolute;
+            width: 350px;
+            height: 350px;
+            border-radius: 50%;
+            filter: blur(140px);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        body::before { background: var(--accent-primary); top: -50px; left: -50px; opacity: 0.3; }
+        body::after { background: var(--accent-secondary); bottom: 50px; right: -50px; opacity: 0.2; }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+            width: 100%;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        header {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: var(--text-main);
+        }
+
+        .logo-icon {
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--glow);
+            font-size: 1.2rem;
+            color: #fff;
+        }
+
+        .logo span {
+            background: linear-gradient(135deg, #a5b4fc, var(--accent-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .offline-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: var(--radius-lg);
+            padding: 3rem 2rem;
+            text-align: center;
+            backdrop-filter: blur(16px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            margin-bottom: 2rem;
+        }
+
+        .icon-wrapper {
+            width: 90px;
+            height: 90px;
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem auto;
+            font-size: 2.5rem;
+            color: #ef4444;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4); }
+            70% { transform: scale(1.05); box-shadow: 0 0 0 15px rgba(239, 68, 68, 0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-bottom: 0.8rem;
+        }
+
+        p.subtitle {
+            color: var(--text-muted);
+            font-size: 1rem;
+            line-height: 1.6;
+            max-width: 500px;
+            margin: 0 auto 2rem auto;
+        }
+
+        .actions {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 0.9rem 1.8rem;
+            border-radius: var(--radius-md);
+            border: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            color: #fff;
+            box-shadow: var(--glow);
+        }
+
+        .btn-primary:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--card-border);
+            color: var(--text-main);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Оффлайн виджет с сохраненными никами */
+        .offline-section {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: var(--radius-lg);
+            padding: 1.5rem;
+            margin-top: 1rem;
+            backdrop-filter: blur(12px);
+        }
+
+        .section-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--accent-amber);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .favs-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            max-height: 150px;
+            overflow-y: auto;
+        }
+
+        .chip {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--card-border);
+            padding: 0.4rem 0.8rem;
+            border-radius: 10px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            color: #fde68a;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .chip:hover {
+            background: rgba(245, 158, 11, 0.2);
+        }
+
+        /* Оффлайн быстрая генерация */
+        .offline-gen-box {
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--card-border);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .offline-nick-display {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--accent-cyan);
+            min-height: 35px;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: #1e293b;
+            border: 1px solid var(--accent-cyan);
+            color: #fff;
+            padding: 0.8rem 1.8rem;
+            border-radius: 30px;
+            font-weight: 600;
+            opacity: 0;
+            transition: all 0.3s ease;
+            pointer-events: none;
+            z-index: 1001;
+        }
+
+        .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+
+        footer {
+            text-align: center;
+            padding: 1.5rem 0;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <a href="index.html" class="logo">
+                <div class="logo-icon"><i class="fa-solid fa-bolt"></i></div>
+                <div>GetNick<span>.ru</span></div>
+            </a>
+        </header>
+
+        <div class="offline-card">
+            <div class="icon-wrapper">
+                <i class="fa-solid fa-wifi"></i>
+            </div>
+            <h1>Нет подключения к сети</h1>
+            <p class="subtitle">Похоже, у вас пропал интернет. Проверьте подключение к Wi-Fi или мобильной сети.</p>
+            
+            <div class="actions">
+                <button class="btn btn-primary" id="retryBtn">
+                    <i class="fa-solid fa-rotate-right"></i> Попробовать снова
+                </button>
+            </div>
+        </div>
+
+        <!-- Доступ к сохраненным никам оффлайн -->
+        <div class="offline-section">
+            <div class="section-title">
+                <i class="fa-solid fa-star"></i> Ваши сохраненные никнеймы (Оффлайн)
+            </div>
+            <div class="favs-list" id="favsList">
+                <span style="color:var(--text-muted); font-size:0.85rem;">Загрузка избранного...</span>
+            </div>
+
+            <div class="offline-gen-box">
+                <span style="font-size:0.85rem; color:var(--text-muted);">Локальная оффлайн-генерация:</span>
+                <div class="offline-nick-display" id="offlineNick">---</div>
+                <button class="btn btn-secondary" style="padding: 0.5rem 1rem; font-size: 0.85rem;" id="genOfflineBtn">
+                    <i class="fa-solid fa-dice"></i> Сгенерировать
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast" id="toast">
+        <span id="toastMsg">Скопировано!</span>
+    </div>
+
+    <footer>
+        &copy; 2026 GetNick.ru — Оффлайн режим
+    </footer>
+
+    <script>
+        const retryBtn = document.getElementById('retryBtn');
+        const favsList = document.getElementById('favsList');
+        const offlineNick = document.getElementById('offlineNick');
+        const genOfflineBtn = document.getElementById('genOfflineBtn');
+        const toast = document.getElementById('toast');
+        const toastMsg = document.getElementById('toastMsg');
+
+        function showToast(msg) {
+            toastMsg.textContent = msg;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 2000);
+        }
+
+        function copyText(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                showToast(`Скопировано: ${text}`);
+            });
+        }
+
+        // Проверка подключения
+        function checkConnection() {
+            if (navigator.onLine) {
+                showToast("Сеть обнаружена! Перенаправление...");
+                setTimeout(() => {
+                    window.location.href = 'MainMenu.html';
+                }, 1000);
+            } else {
+                showToast("Соединение всё ещё отсутствует ❌");
+            }
+        }
+
+        retryBtn.addEventListener('click', checkConnection);
+
+        // Автоматическое перенаправление при появлении интернета
+        window.addEventListener('online', () => {
+            showToast("Соединение восстановлено! ⚡");
+            setTimeout(() => {
+                window.location.href = 'MainMenu.html';
+            }, 1000);
+        });
+
+        // Чтение избранного из localStorage
+        function loadFavorites() {
+            const favs = JSON.parse(localStorage.getItem('getnick_favs') || '[]');
+            if (favs.length === 0) {
+                favsList.innerHTML = '<span style="color:var(--text-muted); font-size:0.85rem;">Сохраненных никнеймов пока нет.</span>';
+                return;
+            }
+            favsList.innerHTML = '';
+            favs.forEach(nick => {
+                const chip = document.createElement('div');
+                chip.className = 'chip';
+                chip.innerHTML = `<i class="fa-solid fa-star"></i> ${nick}`;
+                chip.onclick = () => copyText(nick);
+                favsList.appendChild(chip);
+            });
+        }
+
+        // Локальный генератор без интернета
+        function generateLocalNick() {
+            const cons = "bcdfghjklmnprstvwxz";
+            const vows = "aeiouy";
+            let nick = "";
+            for (let i = 0; i < 6; i++) {
+                nick += (i % 2 === 0) ? cons[Math.floor(Math.random() * cons.length)] : vows[Math.floor(Math.random() * vows.length)];
+            }
+            nick = nick.charAt(0).toUpperCase() + nick.slice(1);
+            offlineNick.textContent = nick;
+        }
+
+        genOfflineBtn.addEventListener('click', generateLocalNick);
+        offlineNick.addEventListener('click', () => {
+            if (offlineNick.textContent !== '---') copyText(offlineNick.textContent);
+        });
+
+        // Старт
+        loadFavorites();
+        generateLocalNick();
+    </script>
+</body>
+</html>
