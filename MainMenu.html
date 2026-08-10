@@ -11,7 +11,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
-        :root {
+        /* Переменные для Тёмной темы (по умолчанию) */
+        :root, [data-theme="dark"] {
             --bg-color: #090d16;
             --card-bg: rgba(18, 26, 43, 0.75);
             --card-border: rgba(255, 255, 255, 0.08);
@@ -26,6 +27,21 @@
             --radius-lg: 20px;
             --radius-md: 12px;
             --glow: 0 0 25px rgba(99, 102, 241, 0.35);
+        }
+
+        /* Переменные для Светлой темы */
+        [data-theme="light"] {
+            --bg-color: #f1f5f9;
+            --card-bg: rgba(255, 255, 255, 0.85);
+            --card-border: rgba(0, 0, 0, 0.08);
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --glow: 0 0 20px rgba(99, 102, 241, 0.2);
+        }
+
+        /* Плавный переход цвета при смене темы */
+        body, .hero-display, .control-card, .section-box, .accordion-item, .modal-box {
+            transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
         }
 
         * {
@@ -57,8 +73,8 @@
             pointer-events: none;
         }
 
-        body::before { background: var(--accent-primary); top: -50px; left: -50px; opacity: 0.4; }
-        body::after { background: var(--accent-secondary); bottom: 50px; right: -50px; opacity: 0.3; }
+        body::before { background: var(--accent-primary); top: -50px; left: -50px; opacity: 0.3; }
+        body::after { background: var(--accent-secondary); bottom: 50px; right: -50px; opacity: 0.25; }
 
         .container {
             max-width: 1100px;
@@ -73,6 +89,8 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 2.5rem;
+            flex-wrap: wrap;
+            gap: 15px;
         }
 
         .logo {
@@ -105,6 +123,40 @@
             -webkit-text-fill-color: transparent;
         }
 
+        /* Переключатель тем */
+        .theme-switch-group {
+            display: flex;
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 3px;
+            gap: 2px;
+            backdrop-filter: blur(10px);
+        }
+
+        .theme-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            padding: 6px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s ease;
+        }
+
+        .theme-btn:hover {
+            color: var(--text-main);
+        }
+
+        .theme-btn.active {
+            background: var(--accent-primary);
+            color: #fff;
+        }
+
         .icon-btn {
             background: var(--card-bg);
             border: 1px solid var(--card-border);
@@ -127,7 +179,7 @@
             text-align: center;
             position: relative;
             backdrop-filter: blur(16px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
             margin-bottom: 2rem;
         }
 
@@ -146,7 +198,7 @@
             font-size: 2.8rem;
             font-weight: 700;
             letter-spacing: 1px;
-            background: linear-gradient(135deg, #ffffff, #c7d2fe);
+            background: linear-gradient(135deg, var(--text-main), #a5b4fc);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             word-break: break-all;
@@ -194,7 +246,7 @@
             gap: 6px;
         }
 
-        .platform-link:hover { color: #fff; border-color: rgba(255,255,255,0.25); }
+        .platform-link:hover { color: var(--text-main); border-color: rgba(255,255,255,0.25); }
 
         .nick-actions {
             display: flex;
@@ -332,7 +384,6 @@
             cursor: pointer;
         }
 
-        /* Избранное и История */
         .section-box {
             background: var(--card-bg);
             border: 1px solid var(--card-border);
@@ -366,12 +417,12 @@
 
         .chip:hover {
             background: rgba(99, 102, 241, 0.2);
-            color: #fff;
+            color: var(--text-main);
         }
 
         .chip-fav {
             border-color: rgba(245, 158, 11, 0.3);
-            color: #fde68a;
+            color: var(--accent-amber);
         }
 
         .batch-section { margin-bottom: 2.5rem; }
@@ -405,7 +456,6 @@
             font-weight: 600;
         }
 
-        /* FAQ Аккордеон */
         .faq-section { margin-bottom: 2.5rem; }
 
         .accordion-item {
@@ -457,7 +507,6 @@
             transition: max-height 0.3s cubic-bezier(1, 0, 1, 0), padding 0.3s ease;
         }
 
-        /* SEO блок */
         .seo-box {
             background: rgba(255, 255, 255, 0.02);
             border: 1px solid var(--card-border);
@@ -470,7 +519,7 @@
         }
 
         .seo-box h2 {
-            color: #fff;
+            color: var(--text-main);
             font-size: 1.3rem;
             margin-bottom: 1rem;
         }
@@ -486,9 +535,9 @@
             transform: translateX(-50%) translateY(150%);
             width: calc(100% - 40px);
             max-width: 600px;
-            background: rgba(15, 23, 42, 0.95);
+            background: var(--card-bg);
             border: 1px solid var(--card-border);
-            box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.4);
             backdrop-filter: blur(16px);
             padding: 1.2rem 1.5rem;
             border-radius: var(--radius-lg);
@@ -526,7 +575,7 @@
         .modal-overlay.open { opacity: 1; pointer-events: all; }
 
         .modal-box {
-            background: #0f172a;
+            background: var(--bg-color);
             border: 1px solid var(--card-border);
             width: 90%;
             max-width: 650px;
@@ -537,7 +586,7 @@
             position: relative;
         }
 
-        .modal-box h2 { margin-bottom: 1rem; font-size: 1.4rem; color: #fff; }
+        .modal-box h2 { margin-bottom: 1rem; font-size: 1.4rem; color: var(--text-main); }
         .modal-box p { font-size: 0.9rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 1rem; }
 
         .close-modal {
@@ -556,9 +605,9 @@
             bottom: 30px;
             left: 50%;
             transform: translateX(-50%) translateY(100px);
-            background: #1e293b;
+            background: var(--card-bg);
             border: 1px solid var(--accent-cyan);
-            color: #fff;
+            color: var(--text-main);
             padding: 0.8rem 1.8rem;
             border-radius: 30px;
             font-weight: 600;
@@ -566,6 +615,7 @@
             transition: all 0.3s ease;
             pointer-events: none;
             z-index: 1001;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
         }
 
         .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
@@ -595,7 +645,15 @@
                 <div class="logo-icon"><i class="fa-solid fa-bolt"></i></div>
                 <div>GetNick<span>.ru</span></div>
             </a>
-            <button class="icon-btn" id="soundBtn" title="Включить / Выключить звук"><i class="fa-solid fa-volume-high"></i></button>
+            
+            <div style="display: flex; gap: 10px; align-items: center;">
+                <div class="theme-switch-group" id="themeSwitchGroup">
+                    <button class="theme-btn" data-theme-val="system" title="Системная тема"><i class="fa-solid fa-desktop"></i></button>
+                    <button class="theme-btn" data-theme-val="dark" title="Тёмная тема"><i class="fa-solid fa-moon"></i></button>
+                    <button class="theme-btn" data-theme-val="light" title="Светлая тема"><i class="fa-solid fa-sun"></i></button>
+                </div>
+                <button class="icon-btn" id="soundBtn" title="Включить / Выключить звук"><i class="fa-solid fa-volume-high"></i></button>
+            </div>
         </header>
 
         <!-- Главный экран с никнеймом -->
@@ -704,7 +762,7 @@
                     <i class="fa-solid fa-chevron-down"></i>
                 </div>
                 <div class="accordion-body">
-                    Генератор выполняют поиск точного совпадения никнейма в поисковой сети Google. Если совпадений с фразой не найдено, система считает этот псевдоним редким и свободным на большинстве игровых платформ.
+                    Генератор выполняет поиск точного совпадения никнейма в поисковой сети Google. Если совпадений не найдено, система считает этот псевдоним редким и свободным на большинстве игровых платформ.
                 </div>
             </div>
 
@@ -785,6 +843,51 @@
     </footer>
 
     <script>
+        // --- ЛОГИКА ТЕМ ОФОРМЛЕНИЯ ---
+        const themeButtons = document.querySelectorAll('#themeSwitchGroup .theme-btn');
+
+        function getSystemTheme() {
+            return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+
+        function applyTheme(themeSetting) {
+            let activeTheme = themeSetting;
+            if (themeSetting === 'system') {
+                activeTheme = getSystemTheme();
+            }
+
+            document.documentElement.setAttribute('data-theme', activeTheme);
+
+            themeButtons.forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.themeVal === themeSetting);
+            });
+        }
+
+        function setTheme(themeSetting) {
+            localStorage.setItem('getnick_theme', themeSetting);
+            applyTheme(themeSetting);
+            playClickSound();
+        }
+
+        themeButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                setTheme(btn.dataset.themeVal);
+            });
+        });
+
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+            const savedTheme = localStorage.getItem('getnick_theme') || 'system';
+            if (savedTheme === 'system') {
+                applyTheme('system');
+            }
+        });
+
+        // Инициализация темы при первой загрузке
+        const savedTheme = localStorage.getItem('getnick_theme') || 'system';
+        applyTheme(savedTheme);
+
+
+        // --- ОСНОВНАЯ ЛОГИКА ГЕНЕРАТОРА ---
         function generateRandomNickname(length = 6, category = 'all') {
             let consonants = "bdklmnprst";
             let vowels = "aeio";
@@ -1073,7 +1176,6 @@
         }
 
         // --- СОБЫТИЯ И ИНИЦИАЛИЗАЦИЯ ---
-
         document.getElementById('lengthRange').addEventListener('input', (e) => {
             state.maxLength = parseInt(e.target.value);
             document.getElementById('lengthVal').textContent = state.maxLength;
@@ -1161,18 +1263,18 @@
         document.getElementById('closePolicyModal').onclick = closePolicy;
         policyModal.onclick = (e) => { if (e.target === policyModal) closePolicy(); };
 
-        // Запуск приложения
+        // Регистрация Service Worker
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js')
+                    .then(reg => console.log('Service Worker зарегистрирован!', reg))
+                    .catch(err => console.error('Ошибка регистрации SW:', err));
+            });
+        }
+
+        // Запуск
         renderFavorites();
         updateGenerator();
     </script>
-    <script>
-    if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
-            navigator.serviceWorker.register('sw.js')
-                .then(reg => console.log('Service Worker зарегистрирован!', reg))
-                .catch(err => console.error('Ошибка регистрации SW:', err));
-        });
-    }
-    </script>
-    </body>
+</body>
 </html>
