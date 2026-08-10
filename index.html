@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GETNICK // Next-Gen Username Generator</title>
+    <!-- Подключаем стильные шрифты -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Space+Grotesk:wght@700;900&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-dark: #05070f;
+            --card-bg: rgba(13, 17, 30, 0.75);
+            --accent-cyan: #00f2fe;
+            --accent-violet: #7b2cbf;
+            --accent-pink: #ff007f;
+            --status-green: #00e676;
+            --status-orange: #ff9100;
+            --status-red: #ff5252;
+            --text-main: #f8fafc;
+            --text-muted: #64748b;
+            --border-glow: rgba(0, 242, 254, 0.15);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* ФОНОВЫЙ КАНВАС */
+        #bgCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* ОБЩИЙ МАКЕТ СТРАНИЦЫ НА ВСЮ ШИРИНУ И ВЫСОТУ */
+        .page-wrapper {
+            display: flex;
+            width: 100vw;
+            min-height: 100vh;
+        }
+
+        /* БОКОВЫЕ КОЛОНКИ РЕКЛАМЫ (НА ВСЮ ВЫСОТУ И ПО КРАЯМ) */
+        .ad-sidebar {
+            width: 320px; /* Увеличенная ширина */
+            flex-shrink: 0;
+            background: rgba(13, 17, 30, 0.45);
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            text-align: center;
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .ad-sidebar.left {
+            border-right: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .ad-sidebar.right {
+            border-left: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .ad-sidebar:hover {
+            background: rgba(13, 17, 30, 0.65);
+            color: var(--accent-cyan);
+        }
+
+        /* ЦЕНТРАЛЬНЫЙ КОНТЕНТ */
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px;
+            min-width: 0;
+        }
+
+        /* ШАПКА / НАВИГАЦИЯ */
+        .navbar {
+            width: 100%;
+            max-width: 520px;
+            padding: 16px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(13, 17, 30, 0.4);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            margin-bottom: 20px;
+        }
+
+        .brand-box {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .brand-icon {
+            width: 38px;
+            height: 38px;
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-violet));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 15px rgba(0, 242, 254, 0.35);
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .brand-box:hover .brand-icon {
+            transform: scale(1.08) rotate(-4deg);
+        }
+
+        .brand-icon svg {
+            width: 20px;
+            height: 20px;
+            fill: #05070f;
+        }
+
+        .brand-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .brand-name {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 900;
+            letter-spacing: 1.5px;
+            background: linear-gradient(135deg, #ffffff 0%, var(--accent-cyan) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1;
+        }
+
+        .brand-tag {
+            font-size: 0.65rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-top: 2px;
+        }
+
+        .nav-status-pill {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--accent-cyan);
+            background: rgba(0, 242, 254, 0.08);
+            border: 1px solid rgba(0, 242, 254, 0.2);
+            padding: 6px 14px;
+            border-radius: 20px;
+            letter-spacing: 1px;
+        }
+
+        .status-dot {
+            width: 7px;
+            height: 7px;
+            background-color: var(--accent-cyan);
+            border-radius: 50%;
+            box-shadow: 0 0 8px var(--accent-cyan);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(0.85); }
+        }
+
+        /* ОСНОВНОЙ КОНТЕЙНЕР КАРТОЧКИ */
+        .card-wrapper {
+            width: 100%;
+            max-width: 500px;
+            margin: auto;
+        }
+
+        .card {
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 35px 28px;
+            border-radius: 28px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), 0 0 40px var(--border-glow);
+            text-align: center;
+            position: relative;
+        }
+
+        .card-header h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2rem;
+            font-weight: 900;
+            letter-spacing: 0.5px;
+            background: linear-gradient(135deg, #ffffff 30%, var(--accent-cyan) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 6px;
+        }
+
+        .card-header p {
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 24px;
+        }
+
+        /* ПЕРЕКЛЮЧАТЕЛЬ РЕЖИМОВ */
+        .mode-switch {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6px;
+            background: rgba(5, 7, 15, 0.7);
+            padding: 5px;
+            border-radius: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            margin-bottom: 22px;
+        }
+
+        .mode-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            padding: 10px 8px;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .mode-btn.active {
+            background: linear-gradient(135deg, rgba(0, 242, 254, 0.15), rgba(123, 44, 191, 0.15));
+            border: 1px solid var(--accent-cyan);
+            color: #ffffff;
+            box-shadow: 0 0 15px rgba(0, 242, 254, 0.2);
+        }
+
+        /* ДИСПЛЕЙ НИКНЕЙМА */
+        .nickname-box {
+            background: rgba(5, 7, 15, 0.85);
+            border: 2px solid rgba(0, 242, 254, 0.25);
+            border-radius: 20px;
+            padding: 24px 15px 42px 15px;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.35rem;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            color: #ffffff;
+            margin-bottom: 14px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .nickname-box:hover {
+            border-color: var(--accent-cyan);
+            box-shadow: 0 0 30px rgba(0, 242, 254, 0.35);
+            transform: translateY(-2px);
+        }
+
+        .nickname-box::after {
+            content: '📋 НАЖМИ, ЧТОБЫ СКОПИРОВАТЬ';
+            position: absolute;
+            bottom: 12px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: var(--accent-cyan);
+            letter-spacing: 1.5px;
+            white-space: nowrap;
+            opacity: 0.8;
+        }
+
+        /* СТАТУС ПРОВЕРКИ */
+        .status-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 22px;
+            min-height: 52px;
+        }
+
+        .web-status {
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .web-status.free { color: var(--status-green); text-shadow: 0 0 12px rgba(0,230,118,0.4); }
+        .web-status.taken { color: var(--status-red); text-shadow: 0 0 12px rgba(255,82,82,0.4); }
+        .web-status.checking { color: var(--status-orange); }
+
+        .google-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--accent-cyan);
+            text-decoration: none;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            padding: 6px 14px;
+            background: rgba(0, 242, 254, 0.08);
+            border: 1px solid rgba(0, 242, 254, 0.25);
+            border-radius: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .google-link:hover {
+            background: rgba(0, 242, 254, 0.18);
+            box-shadow: 0 0 15px rgba(0, 242, 254, 0.25);
+            transform: translateY(-1px);
+        }
+
+        /* КНОПКА ГЕНЕРАЦИИ */
+        .btn-generate {
+            background: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%);
+            color: #05070f;
+            border: none;
+            padding: 18px 24px;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            border-radius: 16px;
+            cursor: pointer;
+            width: 100%;
+            box-shadow: 0 0 25px rgba(0, 242, 254, 0.35);
+            transition: all 0.25s ease;
+        }
+
+        .btn-generate:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 35px rgba(0, 242, 254, 0.6);
+            filter: brightness(1.08);
+        }
+
+        .btn-generate:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        /* ИСТОРИЯ */
+        .history-box {
+            margin-top: 25px;
+            text-align: left;
+        }
+
+        .history-box h3 {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-weight: 700;
+        }
+
+        .history-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .history-tag {
+            background: rgba(5, 7, 15, 0.6);
+            padding: 7px 12px;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #94a3b8;
+            cursor: pointer;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            transition: all 0.2s ease;
+        }
+
+        .history-tag:hover {
+            border-color: var(--accent-cyan);
+            color: var(--accent-cyan);
+        }
+
+        /* ВСПЛЫВАЮЩЕЕ УВЕДОМЛЕНИЕ */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 242, 254, 0.95);
+            color: #05070f;
+            padding: 12px 28px;
+            border-radius: 12px;
+            font-weight: 800;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: none;
+            box-shadow: 0 0 30px rgba(0, 242, 254, 0.7);
+            z-index: 1000;
+        }
+
+        /* АДАПТИВНОСТЬ ПОД ЭКРАНЫ */
+        @media (max-width: 1200px) {
+            .ad-sidebar { width: 220px; } /* Слегка сужаем на средних мониторах */
+        }
+
+        @media (max-width: 900px) {
+            .ad-sidebar { display: none; } /* Скрываем боковины на планшетах и телефонах */
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="bgCanvas"></canvas>
+
+    <div class="page-wrapper">
+        <!-- ЛЕВАЯ РЕКЛАМНАЯ КОЛОНКА НА ВСЮ ВЫСОТУ КРАЯ СТРАНИЦЫ -->
+        <aside class="ad-sidebar left">
+            РЕКЛАМА (ЛЕВЫЙ БОК)
+        </aside>
+
+        <!-- ЦЕНТРАЛЬНЫЙ БЛОК -->
+        <div class="main-content">
+            <header class="navbar">
+                <a href="#" class="brand-box">
+                    <div class="brand-icon">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-5.45 9-12V5l-9-4zm-1 14l-4-4 1.41-1.41L11 12.17l6.59-6.59L19 7l-8 8z"/>
+                        </svg>
+                    </div>
+                    <div class="brand-text">
+                        <span class="brand-name">GETNICK</span>
+                        <span class="brand-tag">Ultra Checker v4.0</span>
+                    </div>
+                </a>
+
+                <div class="nav-status-pill">
+                    <span class="status-dot"></span>
+                    <span>ONLINE</span>
+                </div>
+            </header>
+
+            <main class="card-wrapper">
+                <div class="card">
+                    <div class="card-header">
+                        <h1>ГЕНЕРАТОР НИКОВ</h1>
+                        <p>Сканирование баз в реальном времени</p>
+                    </div>
+
+                    <div class="mode-switch">
+                        <button class="mode-btn active" id="btnModeUnique" onclick="setMode('unique')">🛡️ 100% Чистый</button>
+                        <button class="mode-btn" id="btnModeRandom" onclick="setMode('random')">🎲 Рандомный</button>
+                    </div>
+
+                    <div class="nickname-box" id="nicknameDisplay" onclick="copyNickname()">
+                        НАЖМИ «СГЕНЕРИРОВАТЬ»
+                    </div>
+
+                    <div class="status-wrapper">
+                        <div class="web-status" id="webStatus"></div>
+                        <a id="googleBtn" class="google-link" href="#" target="_blank" style="display: none;">
+                            🔍 Проверить в Google
+                        </a>
+                    </div>
+
+                    <button class="btn-generate" id="genBtn" onclick="generateNewNickname()">Сгенерировать</button>
+
+                    <div class="history-box">
+                        <h3>Недавние никнеймы:</h3>
+                        <div class="history-tags" id="historyList"></div>
+                    </div>
+                </div>
+            </main>
+
+            <div></div> <!-- Пустой элемент для балансировки элементов -->
+        </div>
+
+        <!-- ПРАВАЯ РЕКЛАМНАЯ КОЛОНКА НА ВСЮ ВЫСОТУ КРАЯ СТРАНИЦЫ -->
+        <aside class="ad-sidebar right">
+            РЕКЛАМА (ПРАВЫЙ БОК)
+        </aside>
+    </div>
+
+    <div class="toast" id="toast">Скопировано в буфер!</div>
+
+    <script>
+        // === АНИМАЦИЯ ФОНА (CANVAS) ===
+        const canvas = document.getElementById('bgCanvas');
+        const ctx = canvas.getContext('2d');
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        const particles = [];
+        const particleCount = 40;
+
+        for (let i = 0; i < particleCount; i++) {
+            particles.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                radius: Math.random() * 1.8 + 1,
+                vx: (Math.random() - 0.5) * 0.5,
+                vy: (Math.random() - 0.5) * 0.5,
+                alpha: Math.random() * 0.4 + 0.2
+            });
+        }
+
+        function drawBackground() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (let i = 0; i < particleCount; i++) {
+                let p = particles[i];
+                p.x += p.vx;
+                p.y += p.vy;
+
+                if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+                if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(0, 242, 254, ${p.alpha})`;
+                ctx.shadowBlur = 10;
+                ctx.shadowColor = '#00f2fe';
+                ctx.fill();
+
+                for (let j = i + 1; j < particleCount; j++) {
+                    let p2 = particles[j];
+                    let dist = Math.hypot(p.x - p2.x, p.y - p2.y);
+                    if (dist < 120) {
+                        ctx.beginPath();
+                        ctx.moveTo(p.x, p.y);
+                        ctx.lineTo(p2.x, p2.y);
+                        ctx.strokeStyle = `rgba(0, 242, 254, ${0.12 - dist / 1200})`;
+                        ctx.lineWidth = 0.7;
+                        ctx.stroke();
+                    }
+                }
+            }
+            requestAnimationFrame(drawBackground);
+        }
+        drawBackground();
+
+        // === ЛОГИКА ГЕНЕРАЦИИ ===
+        function generateBaseNickname() {
+            const consonants = "bdklmnprst";
+            const vowels = "aeio";
+            const replacements = {'o': '0', 'i': '1'};
+
+            const length = Math.random() > 0.5 ? 4 : 6;
+            let chars = [];
+
+            for (let i = 0; i < length; i++) {
+                if (i % 2 === 0) {
+                    chars.push(consonants[Math.floor(Math.random() * consonants.length)]);
+                } else {
+                    chars.push(vowels[Math.floor(Math.random() * vowels.length)]);
+                }
+            }
+
+            let validIndices = [];
+            for (let i = 0; i < chars.length - 1; i++) {
+                if (replacements[chars[i]]) {
+                    validIndices.push(i);
+                }
+            }
+
+            if (validIndices.length > 0) {
+                let randomIndex = validIndices[Math.floor(Math.random() * validIndices.length)];
+                let charToReplace = chars[randomIndex];
+                chars[randomIndex] = replacements[charToReplace];
+            }
+
+            let nick = chars.join('');
+            return nick.charAt(0).toUpperCase() + nick.slice(1);
+        }
+
+        // === ПРОВЕРКА СО ВЗОМ БАЗ ===
+        async function countNicknameMatches(nickname) {
+            let matches = 0;
+            try {
+                const ghRes = await fetch(`https://api.github.com/users/${encodeURIComponent(nickname)}`);
+                if (ghRes.status === 200) matches++;
+
+                const ddgRes = await fetch(`https://api.duckduckgo.com/?q=%22${encodeURIComponent(nickname)}%22&format=json`);
+                const ddgData = await ddgRes.json();
+                if (ddgData.AbstractText || ddgData.Heading || (ddgData.RelatedTopics && ddgData.RelatedTopics.length > 0)) {
+                    matches++;
+                }
+
+                const wikiRes = await fetch(`https://en.wikipedia.org/w/api.php?action=query&titles=User:${encodeURIComponent(nickname)}&format=json&origin=*`);
+                const wikiData = await wikiRes.json();
+                if (wikiData.query && wikiData.query.pages && !wikiData.query.pages['-1']) {
+                    matches++;
+                }
+            } catch (error) {}
+            return matches;
+        }
+
+        let currentMode = 'unique';
+
+        function setMode(mode) {
+            currentMode = mode;
+            document.getElementById('btnModeUnique').classList.toggle('active', mode === 'unique');
+            document.getElementById('btnModeRandom').classList.toggle('active', mode === 'random');
+        }
+
+        const display = document.getElementById('nicknameDisplay');
+        const historyList = document.getElementById('historyList');
+        const toast = document.getElementById('toast');
+        const statusDisplay = document.getElementById('webStatus');
+        const googleBtn = document.getElementById('googleBtn');
+        const genBtn = document.getElementById('genBtn');
+
+        async function generateNewNickname() {
+            const currentNick = display.innerText;
+            
+            if (currentNick !== 'НАЖМИ «СГЕНЕРИРОВАТЬ»' && currentNick !== 'ПОИСК...') {
+                const tag = document.createElement('span');
+                tag.className = 'history-tag';
+                tag.innerText = currentNick;
+                tag.onclick = () => copyText(currentNick);
+                
+                historyList.prepend(tag);
+                if (historyList.children.length > 6) {
+                    historyList.removeChild(historyList.lastChild);
+                }
+            }
+
+            genBtn.disabled = true;
+            display.innerText = 'ПОИСК...';
+            statusDisplay.className = 'web-status checking';
+            statusDisplay.innerText = '🔎 Сканирование сетевых баз...';
+            googleBtn.style.display = 'none';
+
+            let candidate = '';
+            let matches = 0;
+
+            if (currentMode === 'unique') {
+                let attempts = 0;
+                const maxAttempts = 20;
+
+                do {
+                    candidate = generateBaseNickname();
+                    matches = await countNicknameMatches(candidate);
+                    attempts++;
+                } while (matches > 0 && attempts < maxAttempts);
+
+                if (matches === 0) {
+                    statusDisplay.className = 'web-status free';
+                    statusDisplay.innerText = '🟢 АБСОЛЮТНО УНИКАЛЕН (0 СОВПАДЕНИЙ)';
+                } else {
+                    statusDisplay.className = 'web-status checking';
+                    statusDisplay.innerText = `⚠️ ЧИСТЫЙ НЕ НАЙДЕН ЗА ${maxAttempts} ПОПЫТОК`;
+                }
+            } else {
+                candidate = generateBaseNickname();
+                matches = await countNicknameMatches(candidate);
+
+                if (matches === 0) {
+                    statusDisplay.className = 'web-status free';
+                    statusDisplay.innerText = '🟢 УНИКАЛЕН (0 СОВПАДЕНИЙ)';
+                } else {
+                    statusDisplay.className = 'web-status taken';
+                    statusDisplay.innerText = `🔴 ЗАНЯТ (СОВПАДЕНИЙ В БАЗАХ: ${matches})`;
+                }
+            }
+
+            display.innerText = candidate;
+            googleBtn.href = `https://www.google.com/search?q=%22${encodeURIComponent(candidate)}%22`;
+            googleBtn.style.display = 'inline-flex';
+
+            genBtn.disabled = false;
+        }
+
+        function copyNickname() {
+            const text = display.innerText;
+            if (text !== 'НАЖМИ «СГЕНЕРИРОВАТЬ»' && text !== 'ПОИСК...') {
+                copyText(text);
+            }
+        }
+
+        function copyText(text) {
+            navigator.clipboard.writeText(text);
+            toast.style.display = 'block';
+            setTimeout(() => {
+                toast.style.display = 'none';
+            }, 1500);
+        }
+    </script>
+</body>
+</html>
