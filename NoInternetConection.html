@@ -361,7 +361,7 @@
             if (navigator.onLine) {
                 showToast("Сеть обнаружена! Перенаправление...");
                 setTimeout(() => {
-                    window.location.href = 'MainMenu.html';
+                    window.location.href = 'mainmenu.html';
                 }, 1000);
             } else {
                 showToast("Соединение всё ещё отсутствует ❌");
@@ -374,7 +374,7 @@
         window.addEventListener('online', () => {
             showToast("Соединение восстановлено! ⚡");
             setTimeout(() => {
-                window.location.href = 'MainMenu.html';
+                window.location.href = 'mainmenu.html';
             }, 1000);
         });
 
