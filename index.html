@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GetNick.ru — Генератор никнеймов</title>
+    <title>GetNick.ru — Генератор никнеймов для игр и соцсетей</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -20,6 +20,7 @@
             --accent-cyan: #06b6d4;
             --accent-green: #10b981;
             --accent-red: #ef4444;
+            --accent-amber: #f59e0b;
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
             --radius-lg: 20px;
@@ -137,6 +138,7 @@
             align-items: center;
             justify-content: center;
             margin: 1rem 0;
+            position: relative;
         }
 
         .main-nick {
@@ -231,6 +233,16 @@
             color: var(--text-main);
         }
 
+        .btn-amber {
+            background: rgba(245, 158, 11, 0.15);
+            border: 1px solid rgba(245, 158, 11, 0.4);
+            color: var(--accent-amber);
+        }
+
+        .btn-amber:hover {
+            background: rgba(245, 158, 11, 0.25);
+        }
+
         .btn-sm {
             padding: 0.5rem 1rem;
             font-size: 0.85rem;
@@ -320,7 +332,8 @@
             cursor: pointer;
         }
 
-        .history-section {
+        /* Избранное и История */
+        .section-box {
             background: var(--card-bg);
             border: 1px solid var(--card-border);
             border-radius: var(--radius-lg);
@@ -328,7 +341,7 @@
             margin-bottom: 2.5rem;
         }
 
-        .history-list {
+        .history-list, .favorites-list {
             display: flex;
             flex-wrap: wrap;
             gap: 8px;
@@ -336,7 +349,7 @@
             overflow-y: auto;
         }
 
-        .history-chip {
+        .chip {
             background: rgba(255, 255, 255, 0.04);
             border: 1px solid var(--card-border);
             padding: 0.4rem 0.8rem;
@@ -347,12 +360,18 @@
             cursor: pointer;
             display: inline-flex;
             align-items: center;
-            gap: 6px;
+            gap: 8px;
+            transition: all 0.2s ease;
         }
 
-        .history-chip:hover {
+        .chip:hover {
             background: rgba(99, 102, 241, 0.2);
             color: #fff;
+        }
+
+        .chip-fav {
+            border-color: rgba(245, 158, 11, 0.3);
+            color: #fde68a;
         }
 
         .batch-section { margin-bottom: 2.5rem; }
@@ -372,12 +391,92 @@
             justify-content: space-between;
             align-items: center;
             cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .nick-card:hover {
+            border-color: var(--accent-primary);
+            transform: translateY(-2px);
         }
 
         .nick-card-text {
             font-family: 'JetBrains Mono', monospace;
             font-size: 1rem;
             font-weight: 600;
+        }
+
+        /* FAQ Аккордеон */
+        .faq-section { margin-bottom: 2.5rem; }
+
+        .accordion-item {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: var(--radius-md);
+            margin-bottom: 0.8rem;
+            overflow: hidden;
+            transition: all 0.2s ease;
+        }
+
+        .accordion-header {
+            padding: 1.2rem 1.5rem;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: var(--text-main);
+        }
+
+        .accordion-header:hover {
+            color: #a5b4fc;
+        }
+
+        .accordion-header i {
+            transition: transform 0.3s ease;
+            color: var(--accent-cyan);
+        }
+
+        .accordion-item.active .accordion-header i {
+            transform: rotate(180deg);
+        }
+
+        .accordion-body {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s cubic-bezier(0, 1, 0, 1), padding 0.3s ease;
+            padding: 0 1.5rem;
+            font-size: 0.92rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        .accordion-item.active .accordion-body {
+            max-height: 500px;
+            padding: 0 1.5rem 1.2rem 1.5rem;
+            transition: max-height 0.3s cubic-bezier(1, 0, 1, 0), padding 0.3s ease;
+        }
+
+        /* SEO блок */
+        .seo-box {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--card-border);
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            margin-bottom: 2.5rem;
+            line-height: 1.7;
+            font-size: 0.92rem;
+            color: var(--text-muted);
+        }
+
+        .seo-box h2 {
+            color: #fff;
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+        }
+
+        .seo-box p {
+            margin-bottom: 1rem;
         }
 
         .cookie-banner {
@@ -400,27 +499,12 @@
             transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
-        .cookie-banner.show {
-            transform: translateX(-50%) translateY(0);
-        }
+        .cookie-banner.show { transform: translateX(-50%) translateY(0); }
 
-        .cookie-content {
-            font-size: 0.88rem;
-            color: var(--text-muted);
-            line-height: 1.4;
-        }
+        .cookie-content { font-size: 0.88rem; color: var(--text-muted); line-height: 1.4; }
+        .cookie-content a { color: var(--accent-cyan); text-decoration: underline; cursor: pointer; }
 
-        .cookie-content a {
-            color: var(--accent-cyan);
-            text-decoration: underline;
-            cursor: pointer;
-        }
-
-        .cookie-actions {
-            display: flex;
-            justify-content: flex-end;
-            gap: 10px;
-        }
+        .cookie-actions { display: flex; justify-content: flex-end; gap: 10px; }
 
         .modal-overlay {
             position: fixed;
@@ -439,10 +523,7 @@
             transition: opacity 0.3s ease;
         }
 
-        .modal-overlay.open {
-            opacity: 1;
-            pointer-events: all;
-        }
+        .modal-overlay.open { opacity: 1; pointer-events: all; }
 
         .modal-box {
             background: #0f172a;
@@ -456,18 +537,8 @@
             position: relative;
         }
 
-        .modal-box h2 {
-            margin-bottom: 1rem;
-            font-size: 1.4rem;
-            color: #fff;
-        }
-
-        .modal-box p {
-            font-size: 0.9rem;
-            color: var(--text-muted);
-            line-height: 1.6;
-            margin-bottom: 1rem;
-        }
+        .modal-box h2 { margin-bottom: 1rem; font-size: 1.4rem; color: #fff; }
+        .modal-box p { font-size: 0.9rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 1rem; }
 
         .close-modal {
             position: absolute;
@@ -497,10 +568,7 @@
             z-index: 1001;
         }
 
-        .toast.show {
-            transform: translateX(-50%) translateY(0);
-            opacity: 1;
-        }
+        .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
 
         footer {
             text-align: center;
@@ -514,20 +582,9 @@
             align-items: center;
         }
 
-        footer a {
-            color: var(--text-muted);
-            text-decoration: none;
-            transition: color 0.2s;
-        }
-
-        footer a:hover {
-            color: var(--accent-cyan);
-        }
-
-        .contact-mail {
-            color: var(--accent-primary);
-            font-weight: 600;
-        }
+        footer a { color: var(--text-muted); text-decoration: none; transition: color 0.2s; }
+        footer a:hover { color: var(--accent-cyan); }
+        .contact-mail { color: var(--accent-primary); font-weight: 600; }
     </style>
 </head>
 <body>
@@ -538,9 +595,10 @@
                 <div class="logo-icon"><i class="fa-solid fa-bolt"></i></div>
                 <div>GetNick<span>.ru</span></div>
             </a>
-            <button class="icon-btn" id="soundBtn" title="Звуковой эффект"><i class="fa-solid fa-volume-high"></i></button>
+            <button class="icon-btn" id="soundBtn" title="Включить / Выключить звук"><i class="fa-solid fa-volume-high"></i></button>
         </header>
 
+        <!-- Главный экран с никнеймом -->
         <div class="hero-display">
             <span style="color: var(--text-muted); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 700;">Сгенерированный никнейм</span>
             
@@ -554,12 +612,14 @@
             <div class="nick-actions">
                 <button class="btn btn-primary" id="generateBtn"><i class="fa-solid fa-arrows-rotate"></i> Сгенерировать</button>
                 <button class="btn btn-secondary" id="copyBtn"><i class="fa-regular fa-copy"></i> Копировать</button>
+                <button class="btn btn-amber" id="favBtn"><i class="fa-regular fa-star"></i> В избранное</button>
             </div>
         </div>
 
+        <!-- Настройки и Категории -->
         <div class="controls-grid">
             <div class="control-card">
-                <div class="card-title"><i class="fa-solid fa-font"></i> Стиль шрифта</div>
+                <div class="card-title"><i class="fa-solid fa-wand-magic-sparkles"></i> Стиль шрифта</div>
                 <div class="options-pills" id="fontPills">
                     <div class="pill active" data-val="normal">Обычный</div>
                     <div class="pill" data-val="script">𝒢𝑜𝓉𝒽𝒾𝒸</div>
@@ -567,10 +627,19 @@
                     <div class="pill" data-val="circles">Ⓒⓘⓡⓒⓛⓔⓢ</div>
                     <div class="pill" data-val="wide">S P A C E D</div>
                 </div>
+
+                <div class="card-title" style="margin-top: 1.5rem;"><i class="fa-solid fa-gamepad"></i> Категория</div>
+                <div class="options-pills" id="categoryPills">
+                    <div class="pill active" data-val="all">Все подряд</div>
+                    <div class="pill" data-val="gaming">Игровые</div>
+                    <div class="pill" data-val="cyber">Киберпанк</div>
+                    <div class="pill" data-val="fantasy">Фэнтези</div>
+                    <div class="pill" data-val="minimal">Минимализм</div>
+                </div>
             </div>
 
             <div class="control-card">
-                <div class="card-title"><i class="fa-solid fa-sliders"></i> Фильтры и Проверка</div>
+                <div class="card-title"><i class="fa-solid fa-sliders"></i> Фильтры и Параметры</div>
                 
                 <div class="range-wrapper">
                     <div class="range-header">
@@ -590,16 +659,34 @@
                         <input type="checkbox" id="tagCheck" class="checkbox">
                     </label>
                     <label class="switch-item">
-                        <span>Только свободные (Google Check)</span>
+                        <span>Проверка через Google</span>
                         <input type="checkbox" id="autoSkipCheck" class="checkbox" checked>
                     </label>
                 </div>
             </div>
         </div>
 
-        <div class="history-section">
+        <!-- Раздел Избранное -->
+        <div class="section-box">
             <div class="card-title" style="justify-content: space-between;">
-                <span><i class="fa-solid fa-clock-rotate-left"></i> История</span>
+                <span><i class="fa-solid fa-star" style="color: var(--accent-amber);"></i> Избранные никнеймы</span>
+                <span id="clearFavsBtn" style="font-size:0.8rem; color:var(--text-muted); cursor:pointer;">Очистить все</span>
+            </div>
+            <div class="favorites-list" id="favsList">
+                <span style="color:var(--text-muted); font-size:0.85rem;">Здесь будут ваши сохраненные никнеймы...</span>
+            </div>
+        </div>
+
+        <!-- Быстрые варианты -->
+        <div class="batch-section">
+            <div class="card-title"><span><i class="fa-solid fa-cubes"></i> Быстрые варианты</span></div>
+            <div class="nick-grid" id="nickGrid"></div>
+        </div>
+
+        <!-- История генерации -->
+        <div class="section-box">
+            <div class="card-title" style="justify-content: space-between;">
+                <span><i class="fa-solid fa-clock-rotate-left"></i> История недавних ников</span>
                 <span id="clearHistoryBtn" style="font-size:0.8rem; color:var(--text-muted); cursor:pointer;">Очистить</span>
             </div>
             <div class="history-list" id="historyList">
@@ -607,9 +694,56 @@
             </div>
         </div>
 
-        <div class="batch-section">
-            <div class="card-title"><span>Быстрые варианты</span></div>
-            <div class="nick-grid" id="nickGrid"></div>
+        <!-- Вопросы и Ответы (FAQ) -->
+        <div class="faq-section">
+            <div class="card-title" style="margin-bottom: 1rem;"><i class="fa-solid fa-circle-question"></i> Часто задаваемые вопросы (FAQ)</div>
+            
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <span>Как работает онлайн-проверка занятости никнейма?</span>
+                    <i class="fa-solid fa-chevron-down"></i>
+                </div>
+                <div class="accordion-body">
+                    Генератор выполняют поиск точного совпадения никнейма в поисковой сети Google. Если совпадений с фразой не найдено, система считает этот псевдоним редким и свободным на большинстве игровых платформ.
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <span>Подходят ли никнеймы для Steam, Roblox, Geometry Dash и Minecraft?</span>
+                    <i class="fa-solid fa-chevron-down"></i>
+                </div>
+                <div class="accordion-body">
+                    Да! Вы можете создавать ники с красивыми символами и шрифтами для игр (Steam, Roblox, GD, Minecraft, PUBG), а также ютуб-каналов и стримерских аккаунтов Twitch.
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <span>Сохраняются ли выбранные никнеймы?</span>
+                    <i class="fa-solid fa-chevron-down"></i>
+                </div>
+                <div class="accordion-body">
+                    Да, при нажатии на кнопку «В избранное» никнеймы сохраняются в память вашего браузера (LocalStorage) и остаются доступными даже после перезагрузки страницы.
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <span>Является ли сервис полностью бесплатным?</span>
+                    <i class="fa-solid fa-chevron-down"></i>
+                </div>
+                <div class="accordion-body">
+                    Абсолютно. GetNick.ru предоставляет бессрочно бесплатный генератор крутых и редких никнеймов без каких-либо ограничений и скрытых подписок.
+                </div>
+            </div>
+        </div>
+
+        <!-- Описание / SEO Блок -->
+        <div class="seo-box">
+            <h2>О сервисе GetNick.ru — Умный генератор оригинальных никнеймов</h2>
+            <p>Выбор крутого никнейма — это важный шаг для любого геймера, стримера или блогера. GetNick.ru использует алгоритмы комбинирования звучных слогов, префиксов, клантегов и декоративных символов, чтобы создавать уникальные псевдонимы за 1 клик.</p>
+            <p>Используйте встроенные фильтры стилей (готический, математический, разорванный шрифт), регулируйте длину и сохраняйте подходящие имена в «Избранное».</p>
         </div>
     </div>
 
@@ -617,8 +751,8 @@
     <div class="cookie-banner" id="cookieBanner">
         <div class="cookie-content">
             <i class="fa-solid fa-cookie-bite" style="color:var(--accent-secondary); margin-right: 6px;"></i>
-            Мы используем файлы cookie для сохранения ваших настроек генерации и избранных никнеймов. 
-            Подробнее в нашей <a id="openPolicyFromCookie">Политике конфиденциальности</a>.
+            Мы используем файлы cookie и локальное хранилище для сохранения настроек и ваших избранных никнеймов. 
+            Подробнее в <a id="openPolicyFromCookie">Политике конфиденциальности</a>.
         </div>
         <div class="cookie-actions">
             <button class="btn btn-secondary btn-sm" id="declineCookie">Отклонить</button>
@@ -631,10 +765,10 @@
         <div class="modal-box">
             <button class="close-modal" id="closePolicyModal"><i class="fa-solid fa-xmark"></i></button>
             <h2>Политика конфиденциальности</h2>
-            <p>Настоящая Политика конфиденциальности описывает, как сайт <strong>GetNick.ru</strong> обрабатывает информацию пользователей.</p>
-            <p><strong>1. Файлы Cookie и локальное хранилище:</strong> Мы используем локальное хранилище браузера (LocalStorage) и cookie исключительно для сохранения пользовательских настроек (выбранные шрифты, фильтры, история сгенерированных ников).</p>
-            <p><strong>2. Внешние запросы:</strong> Сервис выполняет анонимные запросы к открытым источникам для проверки занятости никнеймов. Мы не передаем и не храним ваши личные данные на сторонних серверах.</p>
-            <p><strong>3. Обратная связь:</strong> По всем вопросам вы можете связаться с администрацией сайта по электронной почте: <a href="mailto:zereeyt228@gmail.com" class="contact-mail">zereeyt228@gmail.com</a>.</p>
+            <p>Настоящая Политика описывает порядок обработки данных на сайте <strong>GetNick.ru</strong>.</p>
+            <p><strong>1. Локальное хранилище:</strong> Данные о сохраненных никнеймах (Избранное, История) хранятся исключительно в памяти вашего браузера (LocalStorage) и не передаются на сторонние серверы.</p>
+            <p><strong>2. Внешние запросы:</strong> Запросы на проверку никнеймов выполняются анонимно через публичные API.</p>
+            <p><strong>3. Обратная связь:</strong> Вопросы и предложения отправляйте на почту разработчика: <a href="mailto:zereeyt228@gmail.com" class="contact-mail">zereeyt228@gmail.com</a>.</p>
         </div>
     </div>
 
@@ -651,9 +785,21 @@
     </footer>
 
     <script>
-        function generateRandomNickname(length = 6) {
-            const consonants = "bdklmnprst";
-            const vowels = "aeio";
+        function generateRandomNickname(length = 6, category = 'all') {
+            let consonants = "bdklmnprst";
+            let vowels = "aeio";
+
+            if (category === 'cyber') {
+                consonants = "zxrcktvq";
+                vowels = "aeio";
+            } else if (category === 'fantasy') {
+                consonants = "lmnrsvth";
+                vowels = "aeiouy";
+            } else if (category === 'minimal') {
+                consonants = "bcdfghjklmnpqrstvwxyz";
+                vowels = "aeiou";
+            }
+
             const numberReplacements = {'o': '0', 'i': '1'};
             let nicknameChars = [];
 
@@ -670,7 +816,7 @@
                 }
             }
 
-            if (validIndices.length > 0) {
+            if (validIndices.length > 0 && Math.random() > 0.4) {
                 let randomIndex = validIndices[Math.floor(Math.random() * validIndices.length)];
                 let charToReplace = nicknameChars[randomIndex];
                 nicknameChars[randomIndex] = numberReplacements[charToReplace];
@@ -693,12 +839,14 @@
 
         let state = {
             font: 'normal',
+            category: 'all',
             maxLength: 6,
             decor: true,
             tag: false,
             autoSkip: true,
             sound: true,
-            history: []
+            history: [],
+            favorites: JSON.parse(localStorage.getItem('getnick_favs') || '[]')
         };
 
         let isGenerating = false;
@@ -708,8 +856,11 @@
         const platformChecks = document.getElementById('platformChecks');
         const generateBtn = document.getElementById('generateBtn');
         const copyBtn = document.getElementById('copyBtn');
+        const favBtn = document.getElementById('favBtn');
         const historyList = document.getElementById('historyList');
+        const favsList = document.getElementById('favsList');
         const clearHistoryBtn = document.getElementById('clearHistoryBtn');
+        const clearFavsBtn = document.getElementById('clearFavsBtn');
         const nickGrid = document.getElementById('nickGrid');
         const toast = document.getElementById('toast');
         const toastMsg = document.getElementById('toastMsg');
@@ -736,7 +887,7 @@
         function rand(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
 
         function generateSingleNick() {
-            let word = generateRandomNickname(state.maxLength);
+            let word = generateRandomNickname(state.maxLength, state.category);
             if (state.tag) {
                 if (Math.random() > 0.5) word = rand(prefixes) + word;
                 else word = word + rand(suffixes);
@@ -768,11 +919,9 @@
                     const data = await response.json();
                     const html = data.contents || "";
 
-                    const isFreeInGoogle = html.includes("did not match any documents") || 
-                                           html.includes("ничего не найдено") || 
-                                           html.includes("Не найдено результатов");
-
-                    return isFreeInGoogle;
+                    return html.includes("did not match any documents") || 
+                           html.includes("ничего не найдено") || 
+                           html.includes("Не найдено результатов");
                 }
             } catch (e) {
                 return true; 
@@ -793,7 +942,7 @@
         function addToHistory(nick) {
             if (!state.history.includes(nick)) {
                 state.history.unshift(nick);
-                if (state.history.length > 20) state.history.pop();
+                if (state.history.length > 15) state.history.pop();
                 renderHistory();
             }
         }
@@ -806,10 +955,78 @@
             historyList.innerHTML = '';
             state.history.forEach(nick => {
                 const chip = document.createElement('div');
-                chip.className = 'history-chip';
+                chip.className = 'chip';
                 chip.innerHTML = `<i class="fa-regular fa-copy"></i> ${nick}`;
                 chip.onclick = () => copyToClipboard(nick);
                 historyList.appendChild(chip);
+            });
+        }
+
+        function toggleFavorite(nick) {
+            if (!nick || nick === '...') return;
+            const index = state.favorites.indexOf(nick);
+            if (index === -1) {
+                state.favorites.unshift(nick);
+                showToast(`Добавлено в избранное! ⭐`);
+            } else {
+                state.favorites.splice(index, 1);
+                showToast(`Удалено из избранного`);
+            }
+            localStorage.setItem('getnick_favs', JSON.stringify(state.favorites));
+            renderFavorites();
+            playClickSound();
+        }
+
+        function renderFavorites() {
+            if (state.favorites.length === 0) {
+                favsList.innerHTML = '<span style="color:var(--text-muted); font-size:0.85rem;">Здесь будут ваши сохраненные никнеймы...</span>';
+                return;
+            }
+            favsList.innerHTML = '';
+            state.favorites.forEach(nick => {
+                const chip = document.createElement('div');
+                chip.className = 'chip chip-fav';
+                chip.innerHTML = `<i class="fa-solid fa-star"></i> ${nick}`;
+                chip.onclick = () => copyToClipboard(nick);
+                favsList.appendChild(chip);
+            });
+        }
+
+        function renderBatch() {
+            nickGrid.innerHTML = '';
+            for (let i = 0; i < 6; i++) {
+                const nick = generateSingleNick();
+                const card = document.createElement('div');
+                card.className = 'nick-card';
+                card.innerHTML = `
+                    <span class="nick-card-text">${nick}</span>
+                    <i class="fa-regular fa-copy" style="color:var(--text-muted);"></i>
+                `;
+                card.onclick = () => copyToClipboard(nick);
+                nickGrid.appendChild(card);
+            }
+        }
+
+        function showToast(msg) {
+            toastMsg.textContent = msg;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 2000);
+        }
+
+        function copyToClipboard(text) {
+            if (!text || text === '...') return;
+            navigator.clipboard.writeText(text).then(() => {
+                showToast(`Скопировано: ${text}`);
+                playClickSound();
+            }).catch(() => {
+                const textarea = document.createElement('textarea');
+                textarea.value = text;
+                document.body.appendChild(textarea);
+                textarea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textarea);
+                showToast(`Скопировано: ${text}`);
+                playClickSound();
             });
         }
 
@@ -836,128 +1053,126 @@
 
                 if (isFree) {
                     statusBadge.className = 'status-badge free';
-                    statusBadge.innerHTML = `<i class="fa-solid fa-circle-check"></i> Свободен везде`;
+                    statusBadge.innerHTML = `<i class="fa-solid fa-circle-check"></i> Свободен в Google`;
                 } else {
                     statusBadge.className = 'status-badge taken';
                     statusBadge.innerHTML = `<i class="fa-solid fa-circle-xmark"></i> Возможно занят`;
                 }
             } else {
                 statusBadge.className = 'status-badge';
-                statusBadge.style.color = 'var(--text-muted)';
-                statusBadge.style.background = 'rgba(255, 255, 255, 0.05)';
-                statusBadge.style.borderColor = 'var(--card-border)';
-                statusBadge.innerHTML = `<i class="fa-solid fa-shield-halved"></i> Проверка отключена`;
+                statusBadge.innerHTML = `<i class="fa-solid fa-circle-question"></i> Проверка отключена`;
             }
 
             mainNickEl.textContent = selectedNick;
-            addToHistory(selectedNick);
             updatePlatformLinks(selectedNick);
-
-            nickGrid.innerHTML = '';
-            for (let i = 0; i < 6; i++) {
-                let alt = generateSingleNick();
-                const card = document.createElement('div');
-                card.className = 'nick-card';
-                card.innerHTML = `
-                    <span class="nick-card-text">${alt}</span>
-                    <i class="fa-regular fa-copy" style="color:var(--text-muted);"></i>
-                `;
-                card.onclick = () => {
-                    addToHistory(alt);
-                    copyToClipboard(alt);
-                };
-                nickGrid.appendChild(card);
-            }
+            addToHistory(selectedNick);
+            renderBatch();
 
             isGenerating = false;
             generateBtn.disabled = false;
         }
 
-        function copyToClipboard(text) {
-            playClickSound();
-            navigator.clipboard.writeText(text).then(() => {
-                showToast(`Скопировано: "${text}"`);
-            });
-        }
+        // --- СОБЫТИЯ И ИНИЦИАЛИЗАЦИЯ ---
 
-        function showToast(msg) {
-            toastMsg.textContent = msg;
-            toast.classList.add('show');
-            setTimeout(() => toast.classList.remove('show'), 2000);
-        }
+        document.getElementById('lengthRange').addEventListener('input', (e) => {
+            state.maxLength = parseInt(e.target.value);
+            document.getElementById('lengthVal').textContent = state.maxLength;
+        });
+
+        document.getElementById('decorCheck').addEventListener('change', (e) => state.decor = e.target.checked);
+        document.getElementById('tagCheck').addEventListener('change', (e) => state.tag = e.target.checked);
+        document.getElementById('autoSkipCheck').addEventListener('change', (e) => state.autoSkip = e.target.checked);
+
+        document.getElementById('fontPills').addEventListener('click', (e) => {
+            const pill = e.target.closest('.pill');
+            if (!pill) return;
+            document.querySelectorAll('#fontPills .pill').forEach(p => p.classList.remove('active'));
+            pill.classList.add('active');
+            state.font = pill.dataset.val;
+            playClickSound();
+        });
+
+        document.getElementById('categoryPills').addEventListener('click', (e) => {
+            const pill = e.target.closest('.pill');
+            if (!pill) return;
+            document.querySelectorAll('#categoryPills .pill').forEach(p => p.classList.remove('active'));
+            pill.classList.add('active');
+            state.category = pill.dataset.val;
+            playClickSound();
+        });
+
+        soundBtn.addEventListener('click', () => {
+            state.sound = !state.sound;
+            soundBtn.innerHTML = state.sound 
+                ? '<i class="fa-solid fa-volume-high"></i>' 
+                : '<i class="fa-solid fa-volume-xmark"></i>';
+            if (state.sound) playClickSound();
+        });
+
+        generateBtn.addEventListener('click', updateGenerator);
+        copyBtn.addEventListener('click', () => copyToClipboard(mainNickEl.textContent));
+        favBtn.addEventListener('click', () => toggleFavorite(mainNickEl.textContent));
+
+        clearHistoryBtn.addEventListener('click', () => {
+            state.history = [];
+            renderHistory();
+            playClickSound();
+        });
+
+        clearFavsBtn.addEventListener('click', () => {
+            state.favorites = [];
+            localStorage.removeItem('getnick_favs');
+            renderFavorites();
+            playClickSound();
+        });
+
+        // FAQ Аккордеон
+        document.querySelectorAll('.accordion-header').forEach(header => {
+            header.addEventListener('click', () => {
+                const item = header.parentElement;
+                item.classList.toggle('active');
+                playClickSound();
+            });
+        });
 
         // Cookie & Modal
         const cookieBanner = document.getElementById('cookieBanner');
-        const acceptCookie = document.getElementById('acceptCookie');
-        const declineCookie = document.getElementById('declineCookie');
-        const policyModal = document.getElementById('policyModal');
-        const closePolicyModal = document.getElementById('closePolicyModal');
-        const openPolicyFooter = document.getElementById('openPolicyFooter');
-        const openPolicyFromCookie = document.getElementById('openPolicyFromCookie');
-
-        if (!localStorage.getItem('getnick_cookie_consent')) {
+        if (!localStorage.getItem('cookieAccepted')) {
             setTimeout(() => cookieBanner.classList.add('show'), 1000);
         }
 
-        acceptCookie.onclick = () => {
-            localStorage.setItem('getnick_cookie_consent', 'accepted');
+        document.getElementById('acceptCookie').onclick = () => {
+            localStorage.setItem('cookieAccepted', 'true');
             cookieBanner.classList.remove('show');
-            showToast('Файлы cookie приняты');
+            playClickSound();
         };
 
-        declineCookie.onclick = () => {
-            localStorage.setItem('getnick_cookie_consent', 'declined');
+        document.getElementById('declineCookie').onclick = () => {
             cookieBanner.classList.remove('show');
-            showToast('Файлы cookie отклонены');
+            playClickSound();
         };
 
-        const toggleModal = (show) => {
-            if (show) policyModal.classList.add('open');
-            else policyModal.classList.remove('open');
-        };
+        const policyModal = document.getElementById('policyModal');
+        const openPolicy = () => policyModal.classList.add('open');
+        const closePolicy = () => policyModal.classList.remove('open');
 
-        openPolicyFooter.onclick = (e) => { e.preventDefault(); toggleModal(true); };
-        openPolicyFromCookie.onclick = () => toggleModal(true);
-        closePolicyModal.onclick = () => toggleModal(false);
-        policyModal.onclick = (e) => { if (e.target === policyModal) toggleModal(false); };
+        document.getElementById('openPolicyFromCookie').onclick = openPolicy;
+        document.getElementById('openPolicyFooter').onclick = (e) => { e.preventDefault(); openPolicy(); };
+        document.getElementById('closePolicyModal').onclick = closePolicy;
+        policyModal.onclick = (e) => { if (e.target === policyModal) closePolicy(); };
 
-        // Controls
-        document.getElementById('fontPills').querySelectorAll('.pill').forEach(pill => {
-            pill.onclick = () => {
-                document.getElementById('fontPills').querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
-                pill.classList.add('active');
-                state.font = pill.dataset.val;
-                updateGenerator();
-            };
-        });
-
-        const lengthRange = document.getElementById('lengthRange');
-        lengthRange.oninput = (e) => {
-            state.maxLength = parseInt(e.target.value);
-            document.getElementById('lengthVal').textContent = state.maxLength;
-        };
-        lengthRange.onchange = () => { updateGenerator(); };
-
-        document.getElementById('decorCheck').onchange = (e) => { state.decor = e.target.checked; updateGenerator(); };
-        document.getElementById('tagCheck').onchange = (e) => { state.tag = e.target.checked; updateGenerator(); };
-        document.getElementById('autoSkipCheck').onchange = (e) => { state.autoSkip = e.target.checked; updateGenerator(); };
-
-        clearHistoryBtn.onclick = () => {
-            state.history = [];
-            renderHistory();
-            showToast('История очищена');
-        };
-
-        generateBtn.onclick = updateGenerator;
-        copyBtn.onclick = () => copyToClipboard(mainNickEl.textContent);
-
-        soundBtn.onclick = () => {
-            state.sound = !state.sound;
-            soundBtn.style.opacity = state.sound ? '1' : '0.4';
-            showToast(state.sound ? 'Звук включен' : 'Звук выключен');
-        };
-
+        // Запуск приложения
+        renderFavorites();
         updateGenerator();
     </script>
+<script>
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('sw.js')
+                .then(reg => console.log('Service Worker зарегистрирован!', reg))
+                .catch(err => console.error('Ошибка регистрации SW:', err));
+        });
+    }
+</script>
 </body>
 </html>
