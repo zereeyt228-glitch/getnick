@@ -14,7 +14,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-	<meta name="description" content="GetNick — генератор уникальных ников для Valorant, Cyberpunk и других игр. Создавай стильные игровые ники с помощью умного генератора.">
+	<meta name="description" content="GetNick — генератор уникальных ников для Steam, Roblox, Minecraft и Valorant. Создавай стильные игровые ники за пару секунд.">
 
 	<meta property="og:title" content="GetNick — генератор уникальных ников">
 
@@ -687,7 +687,65 @@
         footer a { color: var(--text-muted); text-decoration: none; transition: color 0.2s; }
         footer a:hover { color: var(--accent-cyan); }
         .contact-mail { color: var(--accent-primary); font-weight: 600; }
+
+        .seo-main-title {
+            font-size: 2rem;
+            line-height: 1.25;
+            text-align: center;
+            margin: 0 0 1.25rem;
+            color: var(--text-main);
+        }
+
+        .seo-content {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            margin: 0 0 2.5rem;
+            line-height: 1.75;
+            color: var(--text-muted);
+        }
+
+        .seo-content h2, .seo-content h3 {
+            color: var(--text-main);
+            margin: 0 0 0.8rem;
+        }
+
+        .seo-content h2 { font-size: 1.35rem; }
+        .seo-content h3 { font-size: 1.05rem; margin-top: 1.5rem; }
+        .seo-content p { margin: 0 0 1rem; }
+        .seo-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.7rem;
+            margin-top: 1rem;
+        }
+        .seo-links a {
+            color: var(--accent-cyan);
+            text-decoration: none;
+            padding: 0.55rem 0.8rem;
+            border: 1px solid var(--card-border);
+            border-radius: 10px;
+            background: rgba(255,255,255,0.03);
+        }
+        .seo-links a:hover { color: var(--text-main); border-color: var(--accent-primary); }
     </style>
+
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://getnick.ru/">
+    <script type="application/ld+json">
+    {
+      "@context":"https://schema.org",
+      "@type":"WebApplication",
+      "name":"GetNick",
+      "url":"https://getnick.ru/",
+      "applicationCategory":"GameApplication",
+      "operatingSystem":"Web Browser",
+      "description":"Генератор уникальных ников для Steam, Roblox, Minecraft и Valorant.",
+      "offers":{"@type":"Offer","price":"0","priceCurrency":"RUB"}
+    }
+    </script>
+
 </head>
 <body>
 
@@ -707,6 +765,8 @@
                 <button class="icon-btn" id="soundBtn" title="Включить / Выключить звук"><i class="fa-solid fa-volume-high"></i></button>
             </div>
         </header>
+
+        <h1 class="seo-main-title">Генератор ников — создайте уникальный ник онлайн</h1>
 
         <!-- Главный экран с никнеймом -->
         <div class="hero-display">
@@ -860,6 +920,27 @@
             <p>Используйте встроенные фильтры стилей (готический, математический, разорванный шрифт), регулируйте длину и сохраняйте подходящие имена в «Избранное».</p>
         </div>
     </div>
+
+
+        <!-- Расширенный SEO-контент -->
+        <section class="seo-content" aria-labelledby="seo-title">
+            <h2 id="seo-title">Генератор ников онлайн — создайте уникальный ник</h2>
+            <p>GetNick.ru — бесплатный онлайн-генератор никнеймов для игроков, стримеров и создателей контента. Сервис помогает быстро придумать короткий и запоминающийся ник, подобрать стильные символы и проверить вариант через поиск Google. Генератор работает прямо в браузере и не требует регистрации.</p>
+            <h3>Ники для Steam, Roblox, Minecraft и Valorant</h3>
+            <p>На GetNick можно создавать игровые имена для популярных платформ и игр. Для Steam подойдут лаконичные и киберспортивные варианты, для Roblox — необычные имена с декоративными символами, для Minecraft — короткие запоминающиеся игровые ники, а для Valorant — динамичные и профессиональные варианты. Можно менять длину, стиль, категорию, символы и префикс.</p>
+            <h3>Как придумать хороший игровой ник</h3>
+            <p>Хороший ник легко прочитать, запомнить и отличить от других. Лучше избегать случайных наборов цифр и слишком длинных сочетаний. Выберите характер ника — например, минималистичный, тёмный, киберпанк или профессиональный — затем настройте длину и оформление. История и избранное позволяют сохранить понравившиеся варианты и вернуться к ним позже.</p>
+            <h3>Красивые ники с символами и стилями</h3>
+            <p>Если обычного текста недостаточно, используйте декоративные символы и стилизованные шрифты. GetNick поддерживает несколько вариантов оформления, включая необычные Unicode-символы и визуальные стили. Перед использованием проверяйте ограничения конкретной игры или платформы: не все символы поддерживаются одинаково.</p>
+            <div class="seo-links" aria-label="Популярные разделы GetNick">
+                <a href="/steam-niki.html">Ники для Steam</a>
+                <a href="/roblox-niki.html">Ники для Roblox</a>
+                <a href="/minecraft-niki.html">Ники для Minecraft</a>
+                <a href="/valorant-niki.html">Ники для Valorant</a>
+                <a href="/twitch-niki.html">Ники для Twitch</a>
+                <a href="/generator-nikov.html">Сгенерировать ник онлайн</a>
+            </div>
+        </section>
 
     <!-- Cookie Баннер -->
     <div class="cookie-banner" id="cookieBanner">
