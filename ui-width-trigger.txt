@@ -1,1 +1,1 @@
-Fix modern quick-start block width - retry.
+Center modern quick-start block — retry width fix.
