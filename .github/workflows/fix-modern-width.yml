@@ -15,21 +15,40 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Constrain modern launcher
+      - name: Constrain and center modern launcher
         shell: bash
         run: |
           python3 - <<'PY'
           from pathlib import Path
+          css = r'''
+          <style id="getnick-modern-width-fix">
+          .modern-launcher {
+            width: min(1100px, calc(100% - 3rem)) !important;
+            max-width: 1100px !important;
+            margin-left: auto !important;
+            margin-right: auto !important;
+          }
+          @media (max-width: 760px) {
+            .modern-launcher {
+              width: calc(100% - 2rem) !important;
+            }
+          }
+          </style>
+          '''
           for filename in ('index.html', 'mainmenu.html'):
               p = Path(filename)
               if not p.exists():
                   continue
               text = p.read_text(encoding='utf-8')
-              old = '.modern-launcher {\n  position: relative;'
-              new = '.modern-launcher {\n  width: calc(100% - 3rem);\n  max-width: 1100px;\n  margin-left: auto;\n  margin-right: auto;\n  position: relative;'
-              if old in text and 'width: calc(100% - 3rem);' not in text:
-                  text = text.replace(old, new, 1)
-                  p.write_text(text, encoding='utf-8')
+              start = '<style id="getnick-modern-width-fix">'
+              end = '</style>'
+              if start in text:
+                  before, rest = text.split(start, 1)
+                  _, after = rest.split(end, 1)
+                  text = before + css + after
+              else:
+                  text = text.replace('</head>', css + '\n</head>', 1)
+              p.write_text(text, encoding='utf-8')
           PY
       - name: Commit
         shell: bash
@@ -40,6 +59,6 @@ jobs:
           if git diff --cached --quiet; then
             echo 'No changes.'
           else
-            git commit -m 'Constrain modern quick-start width'
+            git commit -m 'Center modern quick-start block'
             git push
           fi
