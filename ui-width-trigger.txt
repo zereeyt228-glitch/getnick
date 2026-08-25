@@ -1,1 +1,1 @@
-Center modern quick-start block — retry width fix.
+Center modern quick-start block with !important auto margins.
