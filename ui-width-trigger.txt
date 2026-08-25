@@ -1,1 +1,1 @@
-Center modern quick-start block with strong !important auto margins — final retry.
+Trigger final quick-start full-width alignment.
