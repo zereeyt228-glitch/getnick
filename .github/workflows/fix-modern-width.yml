@@ -1,0 +1,41 @@
+name: Fix modern UI width
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Constrain modern launcher
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          for filename in ('index.html', 'mainmenu.html'):
+              p = Path(filename)
+              if not p.exists():
+                  continue
+              text = p.read_text(encoding='utf-8')
+              old = '.modern-launcher {\n  position: relative;'
+              new = '.modern-launcher {\n  width: calc(100% - 3rem);\n  max-width: 1100px;\n  margin-left: auto;\n  margin-right: auto;\n  position: relative;'
+              if old in text and 'max-width: 1100px;' not in text:
+                  text = text.replace(old, new, 1)
+                  p.write_text(text, encoding='utf-8')
+          PY
+      - name: Commit
+        shell: bash
+        run: |
+          git config user.name 'GetNick UI Bot'
+          git config user.email 'actions@users.noreply.github.com'
+          git add index.html mainmenu.html
+          if git diff --cached --quiet; then
+            echo 'No changes.'
+          else
+            git commit -m 'Constrain modern quick-start width'
+            git push
+          fi
