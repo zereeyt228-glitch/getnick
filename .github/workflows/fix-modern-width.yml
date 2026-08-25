@@ -1,6 +1,10 @@
 name: Fix modern UI width
 
 on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - '.github/workflows/fix-modern-width.yml'
   workflow_dispatch:
 
 permissions:
@@ -23,7 +27,7 @@ jobs:
               text = p.read_text(encoding='utf-8')
               old = '.modern-launcher {\n  position: relative;'
               new = '.modern-launcher {\n  width: calc(100% - 3rem);\n  max-width: 1100px;\n  margin-left: auto;\n  margin-right: auto;\n  position: relative;'
-              if old in text and 'max-width: 1100px;' not in text:
+              if old in text and 'width: calc(100% - 3rem);' not in text:
                   text = text.replace(old, new, 1)
                   p.write_text(text, encoding='utf-8')
           PY
