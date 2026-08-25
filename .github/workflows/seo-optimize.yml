@@ -1,0 +1,79 @@
+name: SEO optimization
+
+on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - '.github/workflows/seo-optimize.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  seo:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Optimize SEO files
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          description = 'GetNick — генератор уникальных ников для Steam, Roblox, Minecraft и Valorant. Создавай стильные игровые ники за пару секунд.'
+
+          head_injections = '''\n    <meta name="robots" content="index, follow">\n    <link rel="canonical" href="https://getnick.ru/">\n    <script type="application/ld+json">\n    {\n      "@context":"https://schema.org",\n      "@type":"WebApplication",\n      "name":"GetNick",\n      "url":"https://getnick.ru/",\n      "applicationCategory":"GameApplication",\n      "operatingSystem":"Web Browser",\n      "description":"Генератор уникальных ников для Steam, Roblox, Minecraft и Valorant.",\n      "offers":{"@type":"Offer","price":"0","priceCurrency":"RUB"}\n    }\n    </script>\n'''
+
+          seo_css = '''\n        .seo-main-title {\n            font-size: 2rem;\n            line-height: 1.25;\n            text-align: center;\n            margin: 0 0 1.25rem;\n            color: var(--text-main);\n        }\n\n        .seo-content {\n            background: var(--card-bg);\n            border: 1px solid var(--card-border);\n            border-radius: var(--radius-lg);\n            padding: 2rem;\n            margin: 0 0 2.5rem;\n            line-height: 1.75;\n            color: var(--text-muted);\n        }\n\n        .seo-content h2, .seo-content h3 {\n            color: var(--text-main);\n            margin: 0 0 0.8rem;\n        }\n\n        .seo-content h2 { font-size: 1.35rem; }\n        .seo-content h3 { font-size: 1.05rem; margin-top: 1.5rem; }\n        .seo-content p { margin: 0 0 1rem; }\n        .seo-links {\n            display: flex;\n            flex-wrap: wrap;\n            gap: 0.7rem;\n            margin-top: 1rem;\n        }\n        .seo-links a {\n            color: var(--accent-cyan);\n            text-decoration: none;\n            padding: 0.55rem 0.8rem;\n            border: 1px solid var(--card-border);\n            border-radius: 10px;\n            background: rgba(255,255,255,0.03);\n        }\n        .seo-links a:hover { color: var(--text-main); border-color: var(--accent-primary); }\n'''
+
+          seo_html = '''\n        <!-- Расширенный SEO-контент -->\n        <section class="seo-content" aria-labelledby="seo-title">\n            <h2 id="seo-title">Генератор ников онлайн — создайте уникальный ник</h2>\n            <p>GetNick.ru — бесплатный онлайн-генератор никнеймов для игроков, стримеров и создателей контента. Сервис помогает быстро придумать короткий и запоминающийся ник, подобрать стильные символы и проверить вариант через поиск Google. Генератор работает прямо в браузере и не требует регистрации.</p>\n            <h3>Ники для Steam, Roblox, Minecraft и Valorant</h3>\n            <p>На GetNick можно создавать игровые имена для популярных платформ и игр. Для Steam подойдут лаконичные и киберспортивные варианты, для Roblox — необычные имена с декоративными символами, для Minecraft — короткие запоминающиеся игровые ники, а для Valorant — динамичные и профессиональные варианты. Можно менять длину, стиль, категорию, символы и префикс.</p>\n            <h3>Как придумать хороший игровой ник</h3>\n            <p>Хороший ник легко прочитать, запомнить и отличить от других. Лучше избегать случайных наборов цифр и слишком длинных сочетаний. Выберите характер ника — например, минималистичный, тёмный, киберпанк или профессиональный — затем настройте длину и оформление. История и избранное позволяют сохранить понравившиеся варианты и вернуться к ним позже.</p>\n            <h3>Красивые ники с символами и стилями</h3>\n            <p>Если обычного текста недостаточно, используйте декоративные символы и стилизованные шрифты. GetNick поддерживает несколько вариантов оформления, включая необычные Unicode-символы и визуальные стили. Перед использованием проверяйте ограничения конкретной игры или платформы: не все символы поддерживаются одинаково.</p>\n            <div class="seo-links" aria-label="Популярные разделы GetNick">\n                <a href="/steam-niki.html">Ники для Steam</a>\n                <a href="/roblox-niki.html">Ники для Roblox</a>\n                <a href="/minecraft-niki.html">Ники для Minecraft</a>\n                <a href="/valorant-niki.html">Ники для Valorant</a>\n                <a href="/twitch-niki.html">Ники для Twitch</a>\n                <a href="/generator-nikov.html">Сгенерировать ник онлайн</a>\n            </div>\n        </section>\n'''
+
+          for filename in ('index.html', 'mainmenu.html'):
+              p = Path(filename)
+              text = p.read_text(encoding='utf-8')
+
+              # Better description.
+              import re
+              text = re.sub(r'<meta name="description"\s+content="[^"]*">', f'<meta name="description" content="{description}">', text, count=1)
+
+              # Add canonical/robots/JSON-LD once.
+              if 'rel="canonical" href="https://getnick.ru/"' not in text:
+                  marker = '</head>'
+                  text = text.replace(marker, head_injections + '\n' + marker, 1)
+
+              # Add a real H1 before the generator card.
+              if 'class="seo-main-title"' not in text:
+                  marker = '        <!-- Главный экран с никнеймом -->'
+                  text = text.replace(marker, '        <h1 class="seo-main-title">Генератор ников — создайте уникальный ник онлайн</h1>\n\n' + marker, 1)
+
+              # Add CSS before </style> once.
+              if '.seo-main-title' not in text:
+                  text = text.replace('    </style>', seo_css + '    </style>', 1)
+
+              # Add expanded semantic content before cookie banner, once.
+              if 'id="seo-title"' not in text:
+                  marker = '    <!-- Cookie Баннер -->'
+                  text = text.replace(marker, seo_html + '\n' + marker, 1)
+
+              p.write_text(text, encoding='utf-8')
+
+          # Keep sitemap up to date with the current landing pages.
+          sitemap = '''<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n  <url><loc>https://getnick.ru/</loc><lastmod>2026-08-25</lastmod><changefreq>weekly</changefreq><priority>1.0</priority></url>\n  <url><loc>https://getnick.ru/steam-niki.html</loc><lastmod>2026-08-25</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>\n  <url><loc>https://getnick.ru/roblox-niki.html</loc><lastmod>2026-08-25</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>\n  <url><loc>https://getnick.ru/minecraft-niki.html</loc><lastmod>2026-08-25</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>\n  <url><loc>https://getnick.ru/valorant-niki.html</loc><lastmod>2026-08-25</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>\n  <url><loc>https://getnick.ru/twitch-niki.html</loc><lastmod>2026-08-25</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>\n  <url><loc>https://getnick.ru/generator-nikov.html</loc><lastmod>2026-08-25</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>\n  <url><loc>https://getnick.ru/about.html</loc><lastmod>2026-08-25</lastmod><changefreq>monthly</changefreq><priority>0.5</priority></url>\n  <url><loc>https://getnick.ru/privacy.html</loc><lastmod>2026-08-25</lastmod><changefreq>monthly</changefreq><priority>0.3</priority></url>\n</urlset>\n'''
+          Path('sitemap.xml').write_text(sitemap, encoding='utf-8')
+          PY
+
+      - name: Commit SEO changes
+        shell: bash
+        run: |
+          git config user.name 'GetNick SEO Bot'
+          git config user.email 'actions@users.noreply.github.com'
+          git add index.html mainmenu.html sitemap.xml
+          if git diff --cached --quiet; then
+            echo 'No SEO changes to commit.'
+          else
+            git commit -m 'Improve homepage SEO, metadata and internal linking'
+            git push
+          fi
