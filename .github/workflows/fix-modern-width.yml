@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Match quick-start width to main content
+      - name: Restore centered quick-start width
         shell: bash
         run: |
           python3 - <<'PY'
@@ -23,14 +23,14 @@ jobs:
           css = r'''
           <style id="getnick-modern-width-fix">
           .modern-launcher {
-            width: calc(100% - 60px) !important;
-            max-width: none !important;
+            width: calc(100% - 3rem) !important;
+            max-width: 1100px !important;
             margin: 0 auto 1.5rem !important;
             box-sizing: border-box !important;
           }
           @media (max-width: 760px) {
             .modern-launcher {
-              width: calc(100% - 24px) !important;
+              width: calc(100% - 2rem) !important;
             }
           }
           </style>
@@ -59,6 +59,6 @@ jobs:
           if git diff --cached --quiet; then
             echo 'No changes.'
           else
-            git commit -m 'Match quick-start width to main content'
+            git commit -m 'Restore centered quick-start width'
             git push
           fi
