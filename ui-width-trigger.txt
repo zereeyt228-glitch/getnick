@@ -1,1 +1,1 @@
-Center modern quick-start block with !important auto margins.
+Center modern quick-start block with strong !important auto margins — final retry.
