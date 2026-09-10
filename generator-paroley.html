@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Генератор паролей онлайн — GetNick.ru</title>
+  <meta name="description" content="Безопасный генератор сложных паролей онлайн. Настройте длину, цифры, символы и регистр и создайте пароль прямо в браузере.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://getnick.ru/generator-paroley.html">
+  <meta property="og:title" content="Генератор паролей онлайн — GetNick.ru">
+  <meta property="og:description" content="Создайте сложный пароль с настройкой длины, цифр, символов и регистра прямо в браузере.">
+  <meta property="og:url" content="https://getnick.ru/generator-paroley.html">
+  <meta property="og:type" content="website">
+  <link rel="icon" type="image/png" href="favicon.png">
+  <style>
+    :root{--bg:#090d16;--card:#121a2b;--border:rgba(255,255,255,.09);--text:#f8fafc;--muted:#94a3b8;--p:#6366f1;--s:#ec4899;--c:#06b6d4}
+    *{box-sizing:border-box}body{margin:0;min-height:100vh;font-family:Arial,sans-serif;color:var(--text);background:radial-gradient(circle at 10% 0%,rgba(99,102,241,.22),transparent 35%),radial-gradient(circle at 90% 100%,rgba(236,72,153,.18),transparent 35%),var(--bg)}
+    .wrap{max-width:900px;margin:0 auto;padding:32px 20px 60px}.top{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:28px}.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--text);font-weight:800;font-size:24px}.brand img{width:42px;height:42px;border-radius:12px}.back{color:var(--muted);text-decoration:none}.back:hover{color:#fff}
+    .hero{background:rgba(18,26,43,.82);border:1px solid var(--border);border-radius:24px;padding:28px;backdrop-filter:blur(16px);box-shadow:0 24px 70px rgba(0,0,0,.25)}h1{margin:0 0 8px;font-size:34px}.lead{color:var(--muted);margin:0 0 24px;line-height:1.6}
+    .password{display:flex;gap:10px;align-items:center;background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:16px;padding:12px}.password input{flex:1;min-width:0;background:transparent;border:0;outline:0;color:#fff;font-size:22px;font-family:monospace}.btn{border:0;border-radius:12px;padding:12px 16px;font-weight:700;color:#fff;cursor:pointer}.copy{background:rgba(255,255,255,.08)}.generate{background:linear-gradient(135deg,var(--p),var(--s));box-shadow:0 12px 28px rgba(99,102,241,.25)}
+    .grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:18px}.card{background:rgba(255,255,255,.035);border:1px solid var(--border);border-radius:18px;padding:20px}.row{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:16px}.range{width:100%;accent-color:var(--s)}.switch{display:flex;justify-content:space-between;gap:12px;padding:11px 0;border-bottom:1px solid rgba(255,255,255,.06)}.switch:last-child{border-bottom:0}.switch input{width:20px;height:20px;accent-color:var(--p)}.value{color:var(--c);font-weight:800}.hint{font-size:13px;color:var(--muted);line-height:1.5;margin-top:14px}.meter{height:8px;background:rgba(255,255,255,.07);border-radius:999px;overflow:hidden;margin-top:8px}.meter i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--p),var(--s),var(--c));transition:width .2s}.status{margin-top:10px;color:var(--muted);font-size:14px}.footer{text-align:center;color:var(--muted);font-size:13px;margin-top:28px}.footer a{color:var(--c);text-decoration:none}
+    @media(max-width:700px){.grid{grid-template-columns:1fr}.password{flex-wrap:wrap}.password input{flex-basis:100%}.top{align-items:flex-start;flex-direction:column}h1{font-size:28px}}
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top"><a class="brand" href="/"><img src="favicon.png" alt="GetNick"><span>GetNick.ru</span></a><a class="back" href="/">← Вернуться к генератору ников</a></div>
+  <section class="hero">
+    <h1>🔐 Генератор паролей онлайн</h1>
+    <p class="lead">Создавайте сложные пароли с нужной длиной и набором символов. Пароль генерируется локально в вашем браузере и никуда не отправляется.</p>
+    <div class="password"><input id="password" readonly aria-label="Сгенерированный пароль"><button class="btn copy" id="copy">Копировать</button><button class="btn generate" id="generate">Сгенерировать</button></div>
+    <div class="status" id="status">Надёжность: настройте параметры ниже.</div>
+    <div class="grid">
+      <div class="card">
+        <div class="row"><strong>Длина пароля</strong><span class="value" id="lenValue">18</span></div>
+        <input class="range" id="length" type="range" min="8" max="64" value="18">
+        <p class="hint">Рекомендуем использовать 16 символов и больше.</p>
+      </div>
+      <div class="card">
+        <div class="row"><strong>Сила пароля</strong><span class="value" id="strengthText">—</span></div>
+        <div class="meter"><i id="meter"></i></div>
+        <p class="hint">Чем длиннее пароль и чем больше набор символов, тем выше его стойкость.</p>
+      </div>
+    </div>
+    <div class="card" style="margin-top:18px">
+      <div class="switch"><span>Заглавные буквы (A-Z)</span><input id="upper" type="checkbox" checked></div>
+      <div class="switch"><span>Строчные буквы (a-z)</span><input id="lower" type="checkbox" checked></div>
+      <div class="switch"><span>Цифры (0-9)</span><input id="numbers" type="checkbox" checked></div>
+      <div class="switch"><span>Спецсимволы (!@#$...)</span><input id="symbols" type="checkbox" checked></div>
+    </div>
+  </section>
+  <div class="footer">© 2026 GetNick.ru · <a href="/privacy.html">Политика конфиденциальности</a></div>
+</div>
+<script>
+(() => {
+  const els = {password:document.getElementById('password'),length:document.getElementById('length'),lenValue:document.getElementById('lenValue'),upper:document.getElementById('upper'),lower:document.getElementById('lower'),numbers:document.getElementById('numbers'),symbols:document.getElementById('symbols'),copy:document.getElementById('copy'),generate:document.getElementById('generate'),meter:document.getElementById('meter'),strengthText:document.getElementById('strengthText'),status:document.getElementById('status')};
+  const sets={upper:'ABCDEFGHJKLMNPQRSTUVWXYZ',lower:'abcdefghijkmnopqrstuvwxyz',numbers:'23456789',symbols:'!@#$%^&*()-_=+[]{};:,.?/'};
+  function secureInt(max){const a=new Uint32Array(1);crypto.getRandomValues(a);return a[0] - Math.floor(a[0]/max)*max;}
+  function pick(s){return s[secureInt(s.length)];}
+  function generate(){
+    let pool='',required=[];
+    for(const k of Object.keys(sets)){if(els[k].checked){pool+=sets[k];required.push(sets[k]);}}
+    if(!pool){els.password.value='';els.status.textContent='Выберите хотя бы один набор символов.';els.strengthText.textContent='—';els.meter.style.width='0%';return;}
+    const len=Number(els.length.value), chars=[];
+    required.forEach(s=>chars.push(pick(s)));
+    while(chars.length<len)chars.push(pick(pool));
+    for(let i=chars.length-1;i>0;i--){const j=secureInt(i+1);[chars[i],chars[j]]=[chars[j],chars[i]];}
+    els.password.value=chars.join('');
+    const score=Math.min(100,Math.round((len/64)*55 + (required.length/4)*45));
+    els.meter.style.width=score+'%';
+    els.strengthText.textContent=score>=85?'Очень высокая':score>=65?'Высокая':score>=45?'Средняя':'Низкая';
+    els.status.textContent='Пароль создан локально в браузере.';
+  }
+  els.length.addEventListener('input',()=>{els.lenValue.textContent=els.length.value;generate();});
+  [els.upper,els.lower,els.numbers,els.symbols].forEach(x=>x.addEventListener('change',generate));
+  els.generate.addEventListener('click',generate);
+  els.copy.addEventListener('click',async()=>{if(!els.password.value)return;try{await navigator.clipboard.writeText(els.password.value);els.status.textContent='✅ Пароль скопирован в буфер обмена.';}catch{els.status.textContent='Не удалось скопировать автоматически. Выделите пароль вручную.';}});
+  generate();
+})();
+</script>
+</body>
+</html>
