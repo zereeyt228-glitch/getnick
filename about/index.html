@@ -1,35 +1,36 @@
 <!doctype html><html lang="ru" data-theme="dark"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>О проекте GetNick</title><meta name="description" content="Что такое GetNick.ru, зачем создан сервис и как устроен генератор ников."><meta name="robots" content="index,follow"><link rel="canonical" href="https://getnick.ru/about/">
-<link rel="icon" href="/favicon.png" type="image/png"><meta name="theme-color" content="#070912">
-<link rel="stylesheet" href="/assets/styles.css"><script defer src="/assets/app.js"></script></head><body>
-<a class="skip-link" href="#main">К содержимому</a>
-<header class="site-header"><div class="container navbar"><a class="brand" href="/"><span class="brand-mark">G</span>GetNick<span>.ru</span></a>
-<nav class="nav-links" id="nav-links"><a href="/">Генератор</a><a href="/steam/">Steam</a><a href="/roblox/">Roblox</a><a href="/minecraft/">Minecraft</a><a href="/valorant/">Valorant</a><a href="/twitch/">Twitch</a><a href="/passwords/">Пароли</a></nav>
-<div class="nav-actions"><button class="icon-button" id="theme-toggle" type="button">☾</button><a class="btn btn-small btn-soft desktop-only" href="/#generator">Создать ник</a><button class="icon-button mobile-toggle" id="mobile-toggle" type="button" aria-label="Открыть меню" aria-expanded="false">☰</button></div></div></header>
-<main id="main"><section class="hero"><div class="container"><span class="eyebrow"><span class="dot"></span>О проекте</span><h1>GetNick — <span class="gradient-text">инструмент, а не лабиринт</span>.</h1><p class="hero-lead">Сайт помогает быстро получить идеи для игрового ника и не заставляет проходить регистрацию, открывать десяток экранов или разбираться в перегруженном интерфейсе.</p></div></section>
-<section class="section"><div class="container content-grid">
-<article class="prose-card">
-<h1>Что такое GetNick.ru</h1>
-<p>GetNick — браузерный генератор никнеймов для игр, стриминга и социальных сетей. Основная задача проекта — быстро дать несколько аккуратных направлений для имени, которые потом можно доработать под себя.</p>
-<h2>Что изменилось в новой версии</h2>
-<ul>
-<li>Интерфейс полностью собран заново и стал заметно проще.</li>
-<li>Удалено нижнее «быстрое меню» и другие дублирующие элементы навигации.</li>
-<li>Страницы получили чистые адреса: например, <code>/steam/</code> вместо <code>/steam-niki.html</code>.</li>
-<li>Общие стили и логика вынесены в отдельные файлы, поэтому проект проще поддерживать.</li>
-<li>Проверка доступности больше не изображает «точный» статус, которого сайт не может гарантировать без API площадки.</li>
-<li>Добавлены избранное, светлая тема, адаптивное меню и улучшенная доступность.</li>
-</ul>
-<h2>Как работает генератор</h2>
-<p>Генератор комбинирует подготовленные основы и окончания для разных стилей, после чего применяет выбранные пользователем ограничения: длину, префикс, суффикс, цифры и оформление. Основная генерация выполняется прямо в браузере.</p>
-<h2>Контент и ограничения</h2>
-<p>GetNick предлагает идеи, но не гарантирует, что конкретное имя свободно на сторонней платформе. Доступность может меняться, поэтому перед регистрацией ник нужно проверить на самой площадке.</p>
-<div class="button-row" style="margin-top:22px"><a class="btn btn-primary" href="/#generator">✦ Создать ник</a><a class="btn" href="/privacy/">Конфиденциальность</a></div>
-</article>
-<aside class="side-card"><h3>Разделы</h3><div class="side-links"><a href="/generator/">Генератор</a><a href="/passwords/">Пароли</a><a href="/steam/">Steam</a><a href="/roblox/">Roblox</a><a href="/minecraft/">Minecraft</a><a href="/valorant/">Valorant</a><a href="/twitch/">Twitch</a></div></aside>
-</div></section></main><footer class="site-footer"><div class="container"><div class="footer-grid">
-<div class="footer-brand"><a class="brand" href="/"><span class="brand-mark">G</span>GetNick<span>.ru</span></a><p>Простой генератор ников для игр, стримов и профилей.</p></div>
-<div class="footer-col"><strong>Инструменты</strong><a href="/generator/">Генератор ников</a><a href="/passwords/">Генератор паролей</a></div>
-<div class="footer-col"><strong>Сайт</strong><a href="/about/">О проекте</a><a href="/privacy/">Конфиденциальность</a></div>
-</div><div class="footer-bottom"><span>© <span id="year">2026</span> GetNick.ru</span><span>Без регистрации и лишних шагов.</span></div></div></footer><div class="toast" id="toast"></div></body></html>
+<title>О проекте GetNick</title><meta name="description" content="GetNick — три простых генератора: ники, пароли и названия.">
+<meta name="robots" content="index,follow"><link rel="canonical" href="https://getnick.ru/about/">
+<link rel="icon" href="/favicon.png" type="image/png"><link rel="apple-touch-icon" href="/favicon.png">
+<meta name="theme-color" content="#070912">
+<meta property="og:type" content="website"><meta property="og:title" content="О проекте GetNick">
+<meta property="og:description" content="GetNick — три простых генератора: ники, пароли и названия."><meta property="og:url" content="https://getnick.ru/about/">
+<meta property="og:image" content="https://getnick.ru/favicon.png">
+<link rel="stylesheet" href="/assets/styles.css"><script defer src="/assets/app.js"></script>
+</head><body><a class="skip-link" href="#main">К содержимому</a><header class="site-header"><div class="container navbar">
+<a class="brand" href="/" aria-label="GetNick — главная"><img class="brand-logo" src="/favicon.png" alt="" width="39" height="39">GetNick<span>.ru</span></a>
+<nav class="nav-links" id="nav-links" aria-label="Основная навигация">
+<a href="/generator/">Генератор ников</a>
+<a href="/passwords/">Генератор паролей</a>
+<a href="/names/">Генератор названий</a>
+</nav>
+<div class="nav-actions">
+<button class="icon-button" id="theme-toggle" type="button" aria-label="Переключить тему">☾</button>
+<button class="icon-button mobile-toggle" id="mobile-toggle" type="button" aria-label="Открыть меню" aria-expanded="false">☰</button>
+</div></div></header>
+<main id="main"><section class="hero"><div class="container"><span class="eyebrow"><span class="dot"></span>О проекте</span><h1>GetNick — <span class="gradient-text">три полезных генератора</span>.</h1><p class="hero-lead">Сайт сфокусирован на трёх разных задачах вместо набора почти одинаковых страниц.</p></div></section>
+<section class="section"><div class="container content-grid"><article class="prose-card">
+<h1>Что такое GetNick.ru</h1><p>GetNick — небольшой набор браузерных инструментов: генератор ников, генератор паролей и генератор названий.</p>
+<h2>Что есть на сайте</h2><ul><li><strong>Ники:</strong> стили, точная длина, префиксы, суффиксы и оформление.</li><li><strong>Пароли:</strong> локальная генерация с выбранной длиной и наборами символов.</li><li><strong>Названия:</strong> идеи для проекта, канала, команды или бренда.</li></ul>
+<h2>Почему больше нет отдельных страниц по играм</h2><p>Они повторяли одну и ту же функцию. Теперь один генератор ников делает эту работу без дублирования разделов.</p>
+<div class="button-row" style="margin-top:22px"><a class="btn btn-primary" href="/generator/">Генератор ников</a><a class="btn" href="/names/">Генератор названий</a></div>
+</article><aside class="side-card"><h3>Генераторы</h3><div class="side-links"><a href="/generator/">Ники</a><a href="/passwords/">Пароли</a><a href="/names/">Названия</a></div></aside>
+</div></section></main><footer class="site-footer"><div class="container">
+<div class="footer-grid">
+<div class="footer-brand"><a class="brand" href="/" aria-label="GetNick — главная"><img class="brand-logo" src="/favicon.png" alt="" width="39" height="39">GetNick<span>.ru</span></a><p>Три простых генератора: ники, пароли и названия. Без регистрации и лишних экранов.</p></div>
+<div class="footer-col"><strong>Генераторы</strong><a href="/generator/">Ники</a><a href="/passwords/">Пароли</a><a href="/names/">Названия</a></div>
+<div class="footer-col"><strong>Сайт</strong><a href="/about/">О проекте</a><a href="/privacy/">Конфиденциальность</a><a href="/sitemap.xml">Карта сайта</a></div>
+</div>
+<div class="footer-bottom"><span>© <span id="year">2026</span> GetNick.ru</span><span>Быстрые идеи прямо в браузере.</span></div>
+</div></footer><div class="toast" id="toast" role="status"></div></body></html>
