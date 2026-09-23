@@ -312,9 +312,30 @@
       if (!pool) pool = lower + upper + digits;
 
       const n = Number(length?.value || 18);
-      const bytes = new Uint32Array(n);
-      crypto.getRandomValues(bytes);
-      const password = [...bytes].map(v => pool[v % pool.length]).join("");
+      const enabled = [];
+      if ($("#pass-lower", root)?.checked) enabled.push(lower);
+      if ($("#pass-upper", root)?.checked) enabled.push(upper);
+      if ($("#pass-digits", root)?.checked) enabled.push(digits);
+      if ($("#pass-symbols", root)?.checked) enabled.push(symbols);
+      if (!enabled.length) enabled.push(lower, upper, digits);
+
+      const securePick = chars => {
+        const value = new Uint32Array(1);
+        crypto.getRandomValues(value);
+        return chars[value[0] % chars.length];
+      };
+
+      const chars = enabled.map(securePick);
+      while (chars.length < n) chars.push(securePick(pool));
+
+      for (let i = chars.length - 1; i > 0; i--) {
+        const value = new Uint32Array(1);
+        crypto.getRandomValues(value);
+        const j = value[0] % (i + 1);
+        [chars[i], chars[j]] = [chars[j], chars[i]];
+      }
+
+      const password = chars.join("");
       output.textContent = password;
       output.dataset.value = password;
     };
@@ -355,5 +376,9 @@
     setupRedirectCompat();
     const year = $("#year");
     if (year) year.textContent = String(new Date().getFullYear());
+
+    if ("serviceWorker" in navigator && location.protocol === "https:") {
+      navigator.serviceWorker.register("/sw.js").catch(() => {});
+    }
   });
 })();
