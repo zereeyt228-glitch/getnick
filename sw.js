@@ -1,4 +1,4 @@
-const CACHE_NAME = "getnick-v3";
+const CACHE_NAME = "getnick-v4";
 const OFFLINE_URL = "/offline.html";
 const CORE = ["/", "/assets/styles.css", "/assets/app.js", "/favicon.png", OFFLINE_URL];
 
