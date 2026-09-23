@@ -1,246 +1,94 @@
-<!doctype html>
-<html lang="ru" data-theme="dark">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>GetNick — генератор ников онлайн</title>
-  <meta name="description" content="GetNick — быстрый бесплатный генератор уникальных ников для Steam, Roblox, Minecraft, Valorant, Twitch и других платформ. Без регистрации.">
-  <meta name="robots" content="index,follow">
-  <link rel="canonical" href="https://getnick.ru/">
-  <link rel="icon" href="/favicon.png" type="image/png">
-  <meta name="theme-color" content="#070912">
-  <meta property="og:type" content="website">
-  <meta property="og:title" content="GetNick — генератор ников онлайн">
-  <meta property="og:description" content="Придумай ник за пару секунд: стили, длина, символы, префиксы и быстрые проверки.">
-  <meta property="og:url" content="https://getnick.ru/">
-  <meta property="og:image" content="https://getnick.ru/favicon.png">
-  <link rel="stylesheet" href="/assets/styles.css">
-  <script defer src="/assets/app.js"></script>
-  <script type="application/ld+json">
-  {"@context":"https://schema.org","@type":"WebApplication","name":"GetNick","url":"https://getnick.ru/","applicationCategory":"UtilitiesApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"RUB"},"description":"Бесплатный генератор уникальных никнеймов для игр, стримов и социальных сетей."}
-  </script>
-</head>
-<body>
-  <a class="skip-link" href="#main">К содержимому</a>
+<!doctype html><html lang="ru" data-theme="dark"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>GetNick — генератор ников, паролей и названий</title><meta name="description" content="GetNick — три бесплатных генератора: ники, надёжные пароли и названия для проектов, каналов и команд.">
+<meta name="robots" content="index,follow"><link rel="canonical" href="https://getnick.ru/">
+<link rel="icon" href="/favicon.png" type="image/png"><link rel="apple-touch-icon" href="/favicon.png">
+<meta name="theme-color" content="#070912">
+<meta property="og:type" content="website"><meta property="og:title" content="GetNick — генератор ников, паролей и названий">
+<meta property="og:description" content="GetNick — три бесплатных генератора: ники, надёжные пароли и названия для проектов, каналов и команд."><meta property="og:url" content="https://getnick.ru/">
+<meta property="og:image" content="https://getnick.ru/favicon.png">
+<link rel="stylesheet" href="/assets/styles.css"><script defer src="/assets/app.js"></script>
+</head><body><a class="skip-link" href="#main">К содержимому</a><header class="site-header"><div class="container navbar">
+<a class="brand" href="/" aria-label="GetNick — главная"><img class="brand-logo" src="/favicon.png" alt="" width="39" height="39">GetNick<span>.ru</span></a>
+<nav class="nav-links" id="nav-links" aria-label="Основная навигация">
+<a href="/generator/">Генератор ников</a>
+<a href="/passwords/">Генератор паролей</a>
+<a href="/names/">Генератор названий</a>
+</nav>
+<div class="nav-actions">
+<button class="icon-button" id="theme-toggle" type="button" aria-label="Переключить тему">☾</button>
+<button class="icon-button mobile-toggle" id="mobile-toggle" type="button" aria-label="Открыть меню" aria-expanded="false">☰</button>
+</div></div></header>
+<main id="main">
+<section class="hero"><div class="container">
+<span class="eyebrow"><span class="dot"></span>Бесплатно · без регистрации</span>
+<h1>Придумай <span class="gradient-text">что-то своё</span>.</h1>
+<p class="hero-lead">Ник, пароль или название — три простых инструмента на одном сайте. Никаких отдельных «Steam-ников», «Twitch-ников» и одинаковых разделов.</p>
+<div class="hero-pills"><span>✦ Ники</span><span>🔐 Пароли</span><span>◇ Названия</span><span>◐ Светлая и тёмная тема</span></div>
+</div></section>
 
-  <header class="site-header">
-    <div class="container navbar">
-      <a class="brand" href="/" aria-label="GetNick — главная">
-        <span class="brand-mark" aria-hidden="true">G</span>
-        GetNick<span>.ru</span>
-      </a>
-
-      <nav class="nav-links" id="nav-links" aria-label="Основная навигация">
-        <a href="/" aria-current="page">Генератор</a>
-        <a href="/steam/">Steam</a>
-        <a href="/roblox/">Roblox</a>
-        <a href="/minecraft/">Minecraft</a>
-        <a href="/valorant/">Valorant</a>
-        <a href="/twitch/">Twitch</a>
-        <a href="/passwords/">Пароли</a>
-      </nav>
-
-      <div class="nav-actions">
-        <button class="icon-button" id="theme-toggle" type="button" aria-label="Переключить тему">☾</button>
-        <a class="btn btn-small btn-soft desktop-only" href="#generator">Создать ник</a>
-        <button class="icon-button mobile-toggle" id="mobile-toggle" type="button" aria-label="Открыть меню" aria-expanded="false">☰</button>
+<section class="section" id="generator">
+<div class="container" data-generator>
+  <div class="generator-shell">
+    <section class="panel result-panel" aria-labelledby="result-title">
+      <div class="result-top">
+        <div class="result-label" id="result-title">Твой новый ник</div>
+        <button class="btn btn-small btn-ghost" type="button" id="regenerate-btn">↻ Ещё</button>
       </div>
-    </div>
-  </header>
-
-  <main id="main">
-    <section class="hero">
-      <div class="container">
-        <span class="eyebrow"><span class="dot"></span> Бесплатно · без регистрации</span>
-        <h1>Ник, который <span class="gradient-text">запомнят</span>.</h1>
-        <p class="hero-lead">Выбери стиль, длину и детали — GetNick соберёт аккуратный ник для игры, стрима или профиля. Без перегруженного меню и лишних шагов.</p>
-        <div class="hero-pills" aria-label="Возможности">
-          <span>⚡ Мгновенная генерация</span>
-          <span>♡ Избранное в браузере</span>
-          <span>◐ Светлая и тёмная тема</span>
-          <span>↗ Быстрые проверки</span>
-        </div>
+      <div class="result-main"><div>
+        <p class="nick-output" id="nick-output" aria-live="polite">Novaix</p>
+        <p class="result-hint"><span id="nick-count">10 символов</span> · длина теперь меняет результат сразу</p>
+      </div></div>
+      <div class="result-actions">
+        <button class="btn btn-primary" type="button" id="generate-btn">✦ Создать ещё</button>
+        <button class="btn" type="button" id="copy-btn">⧉ Копировать</button>
+        <button class="btn" type="button" id="favorite-btn">♡ В избранное</button>
       </div>
     </section>
-
-    <section class="section" id="generator">
-      <div class="container" data-generator>
-        <div class="generator-shell">
-          <section class="panel result-panel" aria-labelledby="result-title">
-            <div class="result-top">
-              <div>
-                <div class="result-label" id="result-title">Твой новый ник</div>
-              </div>
-              <button class="btn btn-small btn-ghost" type="button" id="regenerate-btn" aria-label="Сгенерировать ещё один ник">↻ Ещё</button>
-            </div>
-
-            <div class="result-main">
-              <div>
-                <p class="nick-output" id="nick-output" aria-live="polite">Novaix</p>
-                <p class="result-hint">Нажми «Создать ещё» или настрой генератор справа.</p>
-                <div class="platform-checks" aria-label="Проверить ник">
-                  <a href="#" target="_blank" rel="noopener noreferrer" data-check="steam">Steam ↗</a>
-                  <a href="#" target="_blank" rel="noopener noreferrer" data-check="roblox">Roblox ↗</a>
-                  <a href="#" target="_blank" rel="noopener noreferrer" data-check="twitch">Twitch ↗</a>
-                  <a href="#" target="_blank" rel="noopener noreferrer" data-check="google">Поиск ↗</a>
-                </div>
-              </div>
-            </div>
-
-            <div class="result-actions">
-              <button class="btn btn-primary" type="button" id="generate-btn">✦ Создать ещё</button>
-              <button class="btn" type="button" id="copy-btn">⧉ Копировать</button>
-              <button class="btn" type="button" id="favorite-btn">♡ В избранное</button>
-            </div>
-          </section>
-
-          <aside class="panel settings-panel" aria-label="Настройки генератора">
-            <h2 class="settings-title">Настрой генерацию</h2>
-            <p class="settings-subtitle">Минимум настроек, которые реально меняют результат.</p>
-
-            <div class="field">
-              <label class="field-label" for="nick-style">Стиль</label>
-              <select class="select" id="nick-style">
-                <option value="gaming">Игровой</option>
-                <option value="pro">Короткий / Pro</option>
-                <option value="cyber">Cyber</option>
-                <option value="dark">Dark</option>
-                <option value="fantasy">Fantasy</option>
-                <option value="funny">Мемный</option>
-              </select>
-            </div>
-
-            <div class="field">
-              <label class="field-label" for="nick-length">
-                <span>Длина</span>
-                <output id="nick-length-output" for="nick-length">10</output>
-              </label>
-              <input class="range" id="nick-length" type="range" min="5" max="18" value="10">
-            </div>
-
-            <div class="field">
-              <label class="field-label" for="nick-prefix">Префикс <span style="color:var(--muted);font-weight:600">необязательно</span></label>
-              <input class="input" id="nick-prefix" maxlength="6" placeholder="Например: x_">
-            </div>
-
-            <div class="field">
-              <label class="field-label" for="nick-suffix">Суффикс <span style="color:var(--muted);font-weight:600">необязательно</span></label>
-              <input class="input" id="nick-suffix" maxlength="6" placeholder="Например: _tv">
-            </div>
-
-            <div class="field">
-              <span class="field-label">Дополнительно</span>
-              <div class="toggle-grid">
-                <label class="toggle"><input id="opt-numbers" type="checkbox"> Цифры</label>
-                <label class="toggle"><input id="opt-separator" type="checkbox"> Разделитель</label>
-                <label class="toggle"><input id="opt-case" type="checkbox"> Mix case</label>
-                <label class="toggle"><input id="opt-symbols" type="checkbox"> Рамка</label>
-                <label class="toggle"><input id="opt-fancy" type="checkbox"> Fancy</label>
-              </div>
-            </div>
-          </aside>
-        </div>
-
-        <section class="panel favorites-panel" aria-labelledby="favorites-title">
-          <div class="favorites-head">
-            <div>
-              <div class="result-label">Сохранено на этом устройстве</div>
-              <h2 id="favorites-title" style="margin:4px 0 0;font-size:1.08rem">Избранные ники</h2>
-            </div>
-          </div>
-          <div class="favorites-list" id="favorites-list"></div>
-        </section>
+    <aside class="panel settings-panel" aria-label="Настройки генератора">
+      <h2 class="settings-title">Настрой генерацию</h2>
+      <p class="settings-subtitle">Ползунок задаёт точное итоговое количество символов.</p>
+      <div class="field"><label class="field-label" for="nick-style">Стиль</label>
+        <select class="select" id="nick-style"><option value="gaming">Игровой</option><option value="pro">Короткий / Pro</option><option value="cyber">Cyber</option><option value="dark">Dark</option><option value="fantasy">Fantasy</option><option value="funny">Мемный</option></select>
       </div>
-    </section>
-
-    <section class="section">
-      <div class="container">
-        <h2 class="section-title">Для любой площадки</h2>
-        <p class="section-lead">Отдельные страницы теперь открываются по чистым адресам без <code>.html</code>.</p>
-        <div class="platform-grid">
-          <a class="platform-card" href="/steam/"><span class="platform-symbol">S</span><div><strong>Steam</strong><br><span>Короткие и читаемые</span></div></a>
-          <a class="platform-card" href="/roblox/"><span class="platform-symbol">R</span><div><strong>Roblox</strong><br><span>Без лишних символов</span></div></a>
-          <a class="platform-card" href="/minecraft/"><span class="platform-symbol">M</span><div><strong>Minecraft</strong><br><span>Для сервера и скина</span></div></a>
-          <a class="platform-card" href="/valorant/"><span class="platform-symbol">V</span><div><strong>Valorant</strong><br><span>Киберспортивный стиль</span></div></a>
-          <a class="platform-card" href="/twitch/"><span class="platform-symbol">T</span><div><strong>Twitch</strong><br><span>Запоминающийся бренд</span></div></a>
-        </div>
-      </div>
-    </section>
-
-    <section class="section">
-      <div class="container">
-        <div class="bento">
-          <article class="card card-wide">
-            <div class="card-icon">✦</div>
-            <h3>Не случайный набор букв</h3>
-            <p>Генератор комбинирует короткие основы и окончания по стилям, а затем аккуратно добавляет выбранные настройки. Поэтому результат чаще выглядит как ник, а не как пароль.</p>
-          </article>
-          <article class="card">
-            <div class="card-icon">♡</div>
-            <h3>Избранное</h3>
-            <p>Сохраняй варианты локально в браузере и копируй их одним нажатием.</p>
-          </article>
-          <article class="card">
-            <div class="card-icon">↗</div>
-            <h3>Проверка</h3>
-            <p>Быстрые ссылки помогают проверить ник на популярных площадках. GetNick не выдаёт ложный статус «свободен» без подтверждения.</p>
-          </article>
-          <article class="card card-wide">
-            <div class="card-icon">⚡</div>
-            <h3>Быстрый сайт</h3>
-            <p>Новый интерфейс разделён на общие CSS и JavaScript вместо большого дублирующегося HTML. Это проще поддерживать, быстрее загружать и легче индексировать.</p>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section class="section">
-      <div class="container">
-        <h2 class="section-title">Частые вопросы</h2>
-        <div class="faq">
-          <details open>
-            <summary>GetNick бесплатный?</summary>
-            <p>Да. Генератор работает в браузере и не требует регистрации.</p>
-          </details>
-          <details>
-            <summary>GetNick гарантирует, что ник свободен?</summary>
-            <p>Нет. Доступность имени может меняться в любой момент и зависит от конкретной платформы. Поэтому сайт даёт прямые ссылки для ручной проверки.</p>
-          </details>
-          <details>
-            <summary>Почему адреса страниц без .html?</summary>
-            <p>Разделы сайта перенесены в отдельные каталоги с собственным <code>index.html</code>. Поэтому адрес выглядит как <code>getnick.ru/steam/</code>, а не <code>getnick.ru/steam-niki.html</code>.</p>
-          </details>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <footer class="site-footer">
-    <div class="container">
-      <div class="footer-grid">
-        <div class="footer-brand">
-          <a class="brand" href="/"><span class="brand-mark">G</span> GetNick<span>.ru</span></a>
-          <p>Простой генератор ников для игр, стримов и профилей. Без регистрации и лишних экранов.</p>
-        </div>
-        <div class="footer-col">
-          <strong>Инструменты</strong>
-          <a href="/generator/">Генератор ников</a>
-          <a href="/passwords/">Генератор паролей</a>
-        </div>
-        <div class="footer-col">
-          <strong>Сайт</strong>
-          <a href="/about/">О проекте</a>
-          <a href="/privacy/">Конфиденциальность</a>
-          <a href="/sitemap.xml">Карта сайта</a>
-        </div>
-      </div>
-      <div class="footer-bottom">
-        <span>© <span id="year">2026</span> GetNick.ru</span>
-        <span>Сделано для быстрых идей.</span>
-      </div>
-    </div>
-  </footer>
-
-  <div class="toast" id="toast" role="status"></div>
-</body>
-</html>
+      <div class="field"><label class="field-label" for="nick-length"><span>Длина</span><output id="nick-length-output" for="nick-length">10</output></label><input class="range" id="nick-length" type="range" min="5" max="18" value="10"></div>
+      <div class="field"><label class="field-label" for="nick-prefix">Префикс <span style="color:var(--muted);font-weight:600">необязательно</span></label><input class="input" id="nick-prefix" maxlength="6" placeholder="Например: x_"></div>
+      <div class="field"><label class="field-label" for="nick-suffix">Суффикс <span style="color:var(--muted);font-weight:600">необязательно</span></label><input class="input" id="nick-suffix" maxlength="6" placeholder="Например: _tv"></div>
+      <div class="field"><span class="field-label">Дополнительно</span><div class="toggle-grid">
+        <label class="toggle"><input id="opt-numbers" type="checkbox"> Цифры</label>
+        <label class="toggle"><input id="opt-separator" type="checkbox"> Разделитель</label>
+        <label class="toggle"><input id="opt-case" type="checkbox"> Mix case</label>
+        <label class="toggle"><input id="opt-symbols" type="checkbox"> Рамка</label>
+        <label class="toggle"><input id="opt-fancy" type="checkbox"> Fancy</label>
+      </div></div>
+    </aside>
+  </div>
+  <section class="panel favorites-panel" aria-labelledby="favorites-title">
+    <div class="favorites-head"><div><div class="result-label">На этом устройстве</div><h2 id="favorites-title" style="margin:4px 0 0;font-size:1.08rem">Избранные ники</h2></div></div>
+    <div class="favorites-list" id="favorites-list"></div>
+  </section>
+</div>
+</section>
+<section class="section"><div class="container">
+<h2 class="section-title">Три генератора</h2>
+<p class="section-lead">Оставил только разные по смыслу инструменты.</p>
+<div class="tool-grid">
+<a class="tool-card" href="/generator/"><div class="tool-icon">✦</div><div><strong>Генератор ников</strong><p>Игровые, короткие, cyber, dark и другие варианты с точной длиной.</p></div></a>
+<a class="tool-card" href="/passwords/"><div class="tool-icon">🔐</div><div><strong>Генератор паролей</strong><p>Случайные пароли с настройкой длины и типов символов.</p></div></a>
+<a class="tool-card" href="/names/"><div class="tool-icon">◇</div><div><strong>Генератор названий</strong><p>Идеи для проекта, канала, команды, клана или бренда.</p></div></a>
+</div>
+</div></section>
+<section class="section"><div class="container"><div class="bento">
+<article class="card card-wide"><div class="card-icon">✦</div><h3>Длина ника теперь точная</h3><p>Ползунок сразу перегенерирует ник, а итог содержит ровно выбранное количество символов — вместе с префиксом, суффиксом и рамкой.</p></article>
+<article class="card"><div class="card-icon">♡</div><h3>Избранное</h3><p>Сохраняй удачные варианты локально в браузере.</p></article>
+<article class="card"><div class="card-icon">⚡</div><h3>Без лишних разделов</h3><p>Одинаковые страницы по играм убраны из основной структуры сайта.</p></article>
+<article class="card card-wide"><div class="card-icon"><img src="/favicon.png" alt="" style="width:30px;height:30px;border-radius:9px"></div><h3>Фирменная иконка</h3><p>В шапке и подвале теперь используется настоящий favicon.png, а не буква G в заглушке.</p></article>
+</div></div></section>
+</main><footer class="site-footer"><div class="container">
+<div class="footer-grid">
+<div class="footer-brand"><a class="brand" href="/" aria-label="GetNick — главная"><img class="brand-logo" src="/favicon.png" alt="" width="39" height="39">GetNick<span>.ru</span></a><p>Три простых генератора: ники, пароли и названия. Без регистрации и лишних экранов.</p></div>
+<div class="footer-col"><strong>Генераторы</strong><a href="/generator/">Ники</a><a href="/passwords/">Пароли</a><a href="/names/">Названия</a></div>
+<div class="footer-col"><strong>Сайт</strong><a href="/about/">О проекте</a><a href="/privacy/">Конфиденциальность</a><a href="/sitemap.xml">Карта сайта</a></div>
+</div>
+<div class="footer-bottom"><span>© <span id="year">2026</span> GetNick.ru</span><span>Быстрые идеи прямо в браузере.</span></div>
+</div></footer><div class="toast" id="toast" role="status"></div></body></html>
