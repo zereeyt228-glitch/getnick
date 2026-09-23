@@ -1,0 +1,34 @@
+<!doctype html><html lang="ru" data-theme="dark"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Генератор надёжных паролей онлайн | GetNick</title><meta name="description" content="Создайте случайный пароль прямо в браузере: настройте длину, буквы, цифры и символы. Генерация выполняется локально.">
+<meta name="robots" content="index,follow"><link rel="canonical" href="https://getnick.ru/passwords/">
+<link rel="icon" href="/favicon.png" type="image/png"><meta name="theme-color" content="#070912">
+<meta property="og:type" content="website"><meta property="og:title" content="Генератор надёжных паролей онлайн | GetNick">
+<meta property="og:description" content="Создайте случайный пароль прямо в браузере: настройте длину, буквы, цифры и символы. Генерация выполняется локально."><meta property="og:url" content="https://getnick.ru/passwords/">
+<meta property="og:image" content="https://getnick.ru/favicon.png">
+<link rel="stylesheet" href="/assets/styles.css"><script defer src="/assets/app.js"></script>
+</head><body><a class="skip-link" href="#main">К содержимому</a>
+<header class="site-header"><div class="container navbar">
+<a class="brand" href="/"><span class="brand-mark">G</span>GetNick<span>.ru</span></a>
+<nav class="nav-links" id="nav-links" aria-label="Основная навигация">
+<a href="/">Генератор</a><a href="/steam/">Steam</a><a href="/roblox/">Roblox</a><a href="/minecraft/">Minecraft</a><a href="/valorant/">Valorant</a><a href="/twitch/">Twitch</a><a href="/passwords/" aria-current="page">Пароли</a>
+</nav><div class="nav-actions"><button class="icon-button" id="theme-toggle" type="button">☾</button><a class="btn btn-small btn-soft desktop-only" href="/#generator">Создать ник</a><button class="icon-button mobile-toggle" id="mobile-toggle" type="button" aria-label="Открыть меню" aria-expanded="false">☰</button></div>
+</div></header>
+<main id="main">
+<section class="hero"><div class="container"><span class="eyebrow"><span class="dot"></span>Локальная генерация</span><h1>Надёжный пароль <span class="gradient-text">за секунду</span>.</h1><p class="hero-lead">Пароль создаётся в твоём браузере с помощью криптографического генератора случайных значений и никуда не отправляется кодом этой страницы.</p></div></section>
+<section class="section" style="padding-top:10px"><div class="container" data-password-generator>
+<div class="password-shell">
+<section class="panel result-panel" style="min-height:330px"><div class="result-label">Сгенерированный пароль</div><div class="result-main"><p class="password-output" id="password-output" aria-live="polite"></p></div>
+<div class="result-actions"><button class="btn btn-primary" id="password-generate-btn" type="button">↻ Новый пароль</button><button class="btn" id="password-copy-btn" type="button">⧉ Копировать</button></div></section>
+<aside class="panel settings-panel"><h2 class="settings-title">Параметры</h2><p class="settings-subtitle">Для важных аккаунтов лучше использовать длинные уникальные пароли.</p>
+<div class="field"><label class="field-label" for="password-length"><span>Длина</span><output id="password-length-output" for="password-length">18</output></label><input class="range" id="password-length" type="range" min="10" max="48" value="18"></div>
+<div class="toggle-grid"><label class="toggle"><input id="pass-lower" type="checkbox" checked> a–z</label><label class="toggle"><input id="pass-upper" type="checkbox" checked> A–Z</label><label class="toggle"><input id="pass-digits" type="checkbox" checked> 0–9</label><label class="toggle"><input id="pass-symbols" type="checkbox" checked> !@#</label></div>
+<div class="notice" style="margin-top:18px">Не используй один и тот же пароль на разных сайтах. Для хранения лучше использовать менеджер паролей.</div>
+</aside></div>
+</div></section>
+</main><footer class="site-footer"><div class="container"><div class="footer-grid">
+<div class="footer-brand"><a class="brand" href="/"><span class="brand-mark">G</span>GetNick<span>.ru</span></a><p>Простой генератор ников для игр, стримов и профилей.</p></div>
+<div class="footer-col"><strong>Инструменты</strong><a href="/generator/">Генератор ников</a><a href="/passwords/">Генератор паролей</a></div>
+<div class="footer-col"><strong>Сайт</strong><a href="/about/">О проекте</a><a href="/privacy/">Конфиденциальность</a></div>
+</div><div class="footer-bottom"><span>© <span id="year">2026</span> GetNick.ru</span><span>Без регистрации и лишних шагов.</span></div></div></footer>
+<div class="toast" id="toast" role="status"></div></body></html>
