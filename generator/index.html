@@ -1,0 +1,46 @@
+<!doctype html><html lang="ru" data-theme="dark"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Генератор ников онлайн — создать ник бесплатно | GetNick</title><meta name="description" content="Бесплатный онлайн-генератор ников: выберите стиль, длину, цифры, символы, префикс и создавайте варианты для игр и соцсетей.">
+<meta name="robots" content="index,follow"><link rel="canonical" href="https://getnick.ru/generator/">
+<link rel="icon" href="/favicon.png" type="image/png"><meta name="theme-color" content="#070912">
+<meta property="og:type" content="website"><meta property="og:title" content="Генератор ников онлайн — создать ник бесплатно | GetNick">
+<meta property="og:description" content="Бесплатный онлайн-генератор ников: выберите стиль, длину, цифры, символы, префикс и создавайте варианты для игр и соцсетей."><meta property="og:url" content="https://getnick.ru/generator/">
+<meta property="og:image" content="https://getnick.ru/favicon.png">
+<link rel="stylesheet" href="/assets/styles.css"><script defer src="/assets/app.js"></script>
+</head><body><a class="skip-link" href="#main">К содержимому</a>
+<header class="site-header"><div class="container navbar">
+<a class="brand" href="/"><span class="brand-mark">G</span>GetNick<span>.ru</span></a>
+<nav class="nav-links" id="nav-links" aria-label="Основная навигация">
+<a href="/" aria-current="page">Генератор</a><a href="/steam/">Steam</a><a href="/roblox/">Roblox</a><a href="/minecraft/">Minecraft</a><a href="/valorant/">Valorant</a><a href="/twitch/">Twitch</a><a href="/passwords/">Пароли</a>
+</nav><div class="nav-actions"><button class="icon-button" id="theme-toggle" type="button">☾</button><a class="btn btn-small btn-soft desktop-only" href="/#generator">Создать ник</a><button class="icon-button mobile-toggle" id="mobile-toggle" type="button" aria-label="Открыть меню" aria-expanded="false">☰</button></div>
+</div></header>
+<main id="main">
+<section class="hero"><div class="container"><span class="eyebrow"><span class="dot"></span>Генератор ников</span><h1>Создай <span class="gradient-text">свой ник</span>.</h1><p class="hero-lead">Все основные настройки на одном экране. Результат генерируется локально в браузере — регистрация не нужна.</p></div></section>
+<section class="section" style="padding-top:10px"><div class="container" data-generator>
+<div class="generator-shell">
+<section class="panel result-panel">
+<div class="result-top"><div class="result-label">Результат</div><button class="btn btn-small btn-ghost" id="regenerate-btn" type="button">↻ Ещё</button></div>
+<div class="result-main"><div><p class="nick-output" id="nick-output" aria-live="polite">Novaix</p><p class="result-hint">Сгенерируй ещё или измени настройки.</p>
+<div class="platform-checks"><a href="#" target="_blank" rel="noopener noreferrer" data-check="steam">Steam ↗</a><a href="#" target="_blank" rel="noopener noreferrer" data-check="roblox">Roblox ↗</a><a href="#" target="_blank" rel="noopener noreferrer" data-check="twitch">Twitch ↗</a><a href="#" target="_blank" rel="noopener noreferrer" data-check="google">Поиск ↗</a></div></div></div>
+<div class="result-actions"><button class="btn btn-primary" id="generate-btn" type="button">✦ Создать ещё</button><button class="btn" id="copy-btn" type="button">⧉ Копировать</button><button class="btn" id="favorite-btn" type="button">♡ В избранное</button></div>
+</section>
+<aside class="panel settings-panel"><h2 class="settings-title">Настройки</h2><p class="settings-subtitle">Меняй только то, что действительно нужно.</p>
+<div class="field"><label class="field-label" for="nick-style">Стиль</label><select class="select" id="nick-style"><option value="gaming">Игровой</option><option value="pro">Короткий / Pro</option><option value="cyber">Cyber</option><option value="dark">Dark</option><option value="fantasy">Fantasy</option><option value="funny">Мемный</option></select></div>
+<div class="field"><label class="field-label" for="nick-length"><span>Длина</span><output id="nick-length-output" for="nick-length">10</output></label><input class="range" id="nick-length" type="range" min="5" max="18" value="10"></div>
+<div class="field"><label class="field-label" for="nick-prefix">Префикс</label><input class="input" id="nick-prefix" maxlength="6" placeholder="x_"></div>
+<div class="field"><label class="field-label" for="nick-suffix">Суффикс</label><input class="input" id="nick-suffix" maxlength="6" placeholder="_tv"></div>
+<div class="field"><span class="field-label">Дополнительно</span><div class="toggle-grid"><label class="toggle"><input id="opt-numbers" type="checkbox"> Цифры</label><label class="toggle"><input id="opt-separator" type="checkbox"> Разделитель</label><label class="toggle"><input id="opt-case" type="checkbox"> Mix case</label><label class="toggle"><input id="opt-symbols" type="checkbox"> Рамка</label><label class="toggle"><input id="opt-fancy" type="checkbox"> Fancy</label></div></div>
+</aside></div>
+<section class="panel favorites-panel"><div class="favorites-head"><div><div class="result-label">На этом устройстве</div><h2 style="margin:4px 0 0;font-size:1.08rem">Избранные ники</h2></div></div><div class="favorites-list" id="favorites-list"></div></section>
+</div></section>
+<section class="section"><div class="container"><h2 class="section-title">Как получить хороший результат</h2><div class="bento">
+<article class="card"><div class="card-icon">1</div><h3>Выбери направление</h3><p>Gaming — универсальный, Pro — короткий, Cyber — технологичный, Dark — более мрачный.</p></article>
+<article class="card"><div class="card-icon">2</div><h3>Не перегружай</h3><p>Один небольшой префикс или несколько цифр обычно выглядят лучше, чем всё одновременно.</p></article>
+<article class="card"><div class="card-icon">3</div><h3>Проверь площадку</h3><p>Доступность ника меняется, поэтому финальную проверку делай в Steam, Roblox, Twitch или нужной игре.</p></article>
+</div></div></section>
+</main><footer class="site-footer"><div class="container"><div class="footer-grid">
+<div class="footer-brand"><a class="brand" href="/"><span class="brand-mark">G</span>GetNick<span>.ru</span></a><p>Простой генератор ников для игр, стримов и профилей.</p></div>
+<div class="footer-col"><strong>Инструменты</strong><a href="/generator/">Генератор ников</a><a href="/passwords/">Генератор паролей</a></div>
+<div class="footer-col"><strong>Сайт</strong><a href="/about/">О проекте</a><a href="/privacy/">Конфиденциальность</a></div>
+</div><div class="footer-bottom"><span>© <span id="year">2026</span> GetNick.ru</span><span>Без регистрации и лишних шагов.</span></div></div></footer>
+<div class="toast" id="toast" role="status"></div></body></html>
